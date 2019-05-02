@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "develop": "gatsby develop",
+    "build": "gatsby build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@rehooks/window-size": "^1.0.2",
+    "gatsby": "^2.3.35",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-html5-camera-photo": "^1.4.0"
+  }
 }
