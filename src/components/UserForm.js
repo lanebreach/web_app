@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Layout from "./Layout";
 
-const Main = styled.main`
+export const Main = styled.main`
   display: flex;
   flex-direction: column;
   form {
@@ -13,7 +13,8 @@ const Main = styled.main`
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
-      input {
+      input,
+      select {
         margin: 0 8px;
         border: 1px solid black;
         padding: 4px 8px;
@@ -45,12 +46,11 @@ const UserForm = ({ user, setUser }) => {
         <form
           onSubmit={e => {
             e.preventDefault();
-            setUser({
-              emailAddress: email,
-              fullName: name,
-              phoneNumber: phone
+            let values = {};
+            e.target.querySelectorAll("input").forEach(node => {
+              values[node.name] = node.value;
             });
-            localStorage.setItem(user, JSON.stringify(user));
+            localStorage.setItem("user", JSON.stringify(user));
             setSaved(true);
             setTimeout(() => setSaved(false), 3000);
           }}

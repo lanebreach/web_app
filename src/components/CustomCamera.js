@@ -23,14 +23,14 @@ const CustomCamera = ({ onTakePhoto }) => {
         }}
         idealFacingMode={FACING_MODES.ENVIRONMENT}
         idealResolution={{
-          height: windowSize.innerHeight - 30,
+          height: windowSize.innerHeight,
           width: windowSize.innerWidth
         }}
         imageType={IMAGE_TYPES.JPG}
         imageCompression={0.97}
         isMaxResolution={false}
         isImageMirror={false}
-        isSilentMode={true}
+        isSilentMode={false}
         isDisplayStartCameraError={true}
         isFullscreen={false}
         sizeFactor={1}

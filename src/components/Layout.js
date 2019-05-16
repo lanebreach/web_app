@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "@reach/router";
 
 const Container = styled.div`
@@ -9,9 +9,11 @@ const Container = styled.div`
   width: 90vw;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
   nav {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    margin-top: auto;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -21,9 +23,17 @@ const Container = styled.div`
   }
 `;
 
+const GlobalStyle = createGlobalStyle`
+    body {
+        margin: 0;
+        height: 100vh;
+    }
+`;
+
 const Layout = ({ children }) => {
   return (
     <Container>
+      <GlobalStyle />
       {children}
       <nav>
         <button type="button">
