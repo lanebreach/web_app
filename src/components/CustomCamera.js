@@ -5,15 +5,15 @@ import "react-html5-camera-photo/build/css/index.css";
 const CustomCamera = ({ onTakePhoto }) => {
   const [windowSize, setWindowSize] = useState({});
   const [init, setInit] = useState(false);
-  if (!init && typeof window !== undefined) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!init && typeof window !== undefined) {
+      setInit(true);
       setWindowSize({
         innerHeight: window.innerHeight,
         innerWidth: window.innerWidth
       });
-    });
-    setInit(true);
-  }
+    }
+  });
   return (
     <Camera
       onTakePhoto={dataUri => {
