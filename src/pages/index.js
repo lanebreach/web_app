@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CustomCamera from "../components/CustomCamera";
 import ComplaintForm from "../components/ComplaintForm";
 import UserForm from "../components/UserForm";
-import { Router, Link } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 
 const App = () => {
   const [image, setImage] = useState();
@@ -18,6 +18,7 @@ const App = () => {
         onTakePhoto={dataUri => {
           console.log(dataUri);
           setImage(dataUri);
+          navigate("/form");
         }}
       />
       <ComplaintForm path="form" image={image} user={user} />

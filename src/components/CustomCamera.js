@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
+import Layout from "./Layout";
 
 const CustomCamera = ({ onTakePhoto }) => {
   const [windowSize, setWindowSize] = useState({});
@@ -15,24 +16,26 @@ const CustomCamera = ({ onTakePhoto }) => {
     }
   });
   return (
-    <Camera
-      onTakePhoto={dataUri => {
-        onTakePhoto(dataUri);
-      }}
-      idealFacingMode={FACING_MODES.ENVIRONMENT}
-      idealResolution={{
-        height: windowSize.innerHeight,
-        width: windowSize.innerWidth
-      }}
-      imageType={IMAGE_TYPES.JPG}
-      imageCompression={0.97}
-      isMaxResolution={false}
-      isImageMirror={false}
-      isSilentMode={true}
-      isDisplayStartCameraError={true}
-      isFullscreen={true}
-      sizeFactor={1}
-    />
+    <Layout>
+      <Camera
+        onTakePhoto={dataUri => {
+          onTakePhoto(dataUri);
+        }}
+        idealFacingMode={FACING_MODES.ENVIRONMENT}
+        idealResolution={{
+          height: windowSize.innerHeight - 30,
+          width: windowSize.innerWidth
+        }}
+        imageType={IMAGE_TYPES.JPG}
+        imageCompression={0.97}
+        isMaxResolution={false}
+        isImageMirror={false}
+        isSilentMode={true}
+        isDisplayStartCameraError={true}
+        isFullscreen={false}
+        sizeFactor={1}
+      />
+    </Layout>
   );
 };
 export default CustomCamera;

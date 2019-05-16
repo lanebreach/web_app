@@ -13,11 +13,15 @@
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@rehooks/window-size": "^1.0.2",
+    "babel-preset-gatsby": "^0.1.11",
     "gatsby": "^2.3.35",
     "gatsby-plugin-create-client-paths": "^2.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-html5-camera-photo": "^1.4.0",
     "styled-components": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.0"
   }
 }
