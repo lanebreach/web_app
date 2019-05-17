@@ -28,8 +28,8 @@ export const Main = styled.main`
   }
 `;
 
-const UserForm = ({ user, setUser }) => {
-  const { emailAddress = "", fullName = "", phoneNumber = "" } = user;
+const UserForm = ({ user = {}, setUser }) => {
+  const { emailAddress, fullName, phoneNumber } = user;
   const [email, updateEmail] = useState(emailAddress);
   const [name, updateName] = useState(fullName);
   const [phone, updatePhone] = useState(phoneNumber);
@@ -48,9 +48,10 @@ const UserForm = ({ user, setUser }) => {
             e.preventDefault();
             let values = {};
             e.target.querySelectorAll("input").forEach(node => {
-              values[node.name] = node.value;
+              return (values[node.name] = node.value);
             });
-            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("user", JSON.stringify(values));
+            setUser(values);
             setSaved(true);
             setTimeout(() => setSaved(false), 3000);
           }}

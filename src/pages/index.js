@@ -12,15 +12,15 @@ const App = () => {
     fullName: "",
     phoneNumber: ""
   });
-  useEffect(() => {
-    if (!init) {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      if (storedUser) {
-        setUser(storedUser);
-      }
-      setInit(true);
+
+  if (!init) {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
     }
-  });
+    setInit(true);
+  }
+
   return (
     <Router>
       <CustomCamera
@@ -30,7 +30,9 @@ const App = () => {
           setImage(dataUri);
           navigate("/form");
         }}
+        complete={!!image}
       />
+
       <ComplaintForm path="form" image={image} user={user} />
       <UserForm path="user" user={user} setUser={setUser} />
     </Router>
