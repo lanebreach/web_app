@@ -14,7 +14,8 @@ export const Main = styled.main`
       align-items: center;
       margin-bottom: 10px;
       input,
-      select {
+      select,
+      textarea {
         margin: 0 8px;
         border: 1px solid black;
         padding: 4px 8px;

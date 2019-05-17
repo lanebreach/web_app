@@ -3,7 +3,7 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import Layout from "./Layout";
 
-const CustomCamera = ({ onTakePhoto, complete }) => {
+const CustomCamera = ({ onTakePhoto, image, setImage }) => {
   const [windowSize, setWindowSize] = useState({});
   const [stream, setStream] = useState();
   const [init, setInit] = useState(false);
@@ -15,8 +15,9 @@ const CustomCamera = ({ onTakePhoto, complete }) => {
         innerWidth: window.innerWidth
       });
     }
-    if (complete) {
+    if (image && stream) {
       stream.removeTrack(stream.getTracks()[0]);
+      setStream(undefined);
     }
   });
   function onCameraStart(newStream) {
@@ -27,7 +28,7 @@ const CustomCamera = ({ onTakePhoto, complete }) => {
   }
   return (
     <Layout>
-      {!complete ? (
+      {!image ? (
         <Camera
           onTakePhoto={dataUri => {
             onTakePhoto(dataUri);
@@ -47,7 +48,16 @@ const CustomCamera = ({ onTakePhoto, complete }) => {
           isFullscreen={false}
           sizeFactor={1}
         />
-      ) : null}
+      ) : (
+        <div>
+          <p>You have already taken an image:</p>
+          <img src={image} />
+          Reset:{" "}
+          <button type="reset" onClick={() => setImage("")}>
+            reset
+          </button>
+        </div>
+      )}
     </Layout>
   );
 };

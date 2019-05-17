@@ -30,7 +30,8 @@ const App = () => {
           setImage(dataUri);
           navigate("/form");
         }}
-        complete={!!image}
+        image={image}
+        setImage={setImage}
       />
 
       <ComplaintForm path="form" image={image} user={user} />
