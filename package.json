@@ -1,15 +1,27 @@
 {
   "name": "lane-breach-pwa",
   "version": "1.0.0",
-  "description": "",
+  "description": "Application to allow users to report blocked bike lanes",
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "311",
+    "open source",
+    "bike",
+    "lane",
+    "biking",
+    "camera"
+  ],
+  "author": "Kyle Peacock",
   "license": "ISC",
+  "repository": "github:lanebreach/web_app",
+  "bugs": {
+    "url": "https://github.com/lanebreach/web_app/issues",
+    "email": "kyle@peacock.dev"
+  },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@rehooks/window-size": "^1.0.2",
