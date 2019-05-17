@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Layout from "./Layout";
+import { storeUser } from "../utils/methods";
 
 export const Main = styled.main`
   display: flex;
@@ -51,7 +52,7 @@ const UserForm = ({ user = {}, setUser }) => {
             e.target.querySelectorAll("input").forEach(node => {
               return (values[node.name] = node.value);
             });
-            localStorage.setItem("user", JSON.stringify(values));
+            storeUser(values);
             setUser(values);
             setSaved(true);
             setTimeout(() => setSaved(false), 3000);

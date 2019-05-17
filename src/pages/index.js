@@ -3,6 +3,7 @@ import CustomCamera from "../components/CustomCamera";
 import ComplaintForm from "../components/ComplaintForm";
 import UserForm from "../components/UserForm";
 import { Router, navigate } from "@reach/router";
+import { getStoredUser } from "../utils/methods";
 
 const App = () => {
   const [image, setImage] = useState();
@@ -14,7 +15,7 @@ const App = () => {
   });
 
   if (!init) {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = getStoredUser();
     if (storedUser) {
       setUser(storedUser);
     }
