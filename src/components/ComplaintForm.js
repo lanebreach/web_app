@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
 import Layout from "./Layout";
 import { Main } from "./UserForm";
 import { submitRequest } from "../utils/methods";
+import { Link } from "@reach/router";
 
 const Categories = () => {
   let categories = [
@@ -25,6 +27,10 @@ const Categories = () => {
     </>
   );
 };
+
+const PreviewImage = styled.img`
+  max-height: 40vh;
+`;
 
 const ComplaintForm = ({ image, user }) => {
   const [init, setInit] = useState(false);
@@ -99,6 +105,19 @@ const ComplaintForm = ({ image, user }) => {
           </label>
           <button type="submit">Submit</button>
         </form>
+        <div>
+          {image ? (
+            <>
+              Here is the image you're submitting:
+              <PreviewImage src={image} alt="captured image" />
+            </>
+          ) : (
+            <>
+              You haven't captured an image yet.{" "}
+              <Link to="/">Take a photo</Link>
+            </>
+          )}
+        </div>
       </Main>
     </Layout>
   );

@@ -24,6 +24,11 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/pro-light-svg-icons": "^5.8.2",
+    "@fortawesome/pro-regular-svg-icons": "^5.8.2",
+    "@fortawesome/pro-solid-svg-icons": "^5.8.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@rehooks/window-size": "^1.0.2",
     "babel-preset-gatsby": "^0.1.11",
     "core-js": "2.6.5",

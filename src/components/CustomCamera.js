@@ -26,6 +26,8 @@ const CustomCamera = ({ onTakePhoto, image, setImage }) => {
       setStream(newStream);
     }
   }
+  const width = windowSize?.innerWidth;
+  const height = width > height ? height : width;
   return (
     <Layout>
       {!image ? (
@@ -36,8 +38,8 @@ const CustomCamera = ({ onTakePhoto, image, setImage }) => {
           onCameraStart={onCameraStart}
           idealFacingMode={FACING_MODES.ENVIRONMENT}
           idealResolution={{
-            height: windowSize.innerHeight,
-            width: windowSize.innerWidth
+            height,
+            width
           }}
           imageType={IMAGE_TYPES.JPG}
           imageCompression={0.97}
