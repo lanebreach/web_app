@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCamera,
   faPollH,
-  faPortrait
+  faUserEdit
 } from "@fortawesome/pro-regular-svg-icons";
 import { Link } from "@reach/router";
 
@@ -76,7 +76,7 @@ const Layout = ({ children }) => {
         </Link>
         <Link to="/user">
           <button type="button" aria-labelledby="settingsScreen">
-            <FontAwesomeIcon icon={faPortrait} size="3x" />
+            <FontAwesomeIcon icon={faUserEdit} size="3x" />
           </button>
         </Link>
       </nav>
