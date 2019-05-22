@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "preinstall": "npm config set \"@fortawesome:registry\" https://npm.fontawesome.com/ && npm config set \"//npm.fontawesome.com/:_authToken\" 79502CD1-9B6B-4F3D-B400-A2FB83D521AE"
   },
   "keywords": [
     "311",
