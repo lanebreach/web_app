@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build",
-    "preinstall": "npm config set \"@fortawesome:registry\" https://npm.fontawesome.com/ && npm config set \"//npm.fontawesome.com/:_authToken\" 79502CD1-9B6B-4F3D-B400-A2FB83D521AE"
+    "build": "gatsby build"
   },
   "keywords": [
     "311",
@@ -45,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
+    "@fortawesome/fontawesome-pro": "^5.8.2",
     "babel-eslint": "^10.0.1",
     "babel-plugin-styled-components": "^1.10.0",
     "eslint-plugin-babel": "^5.3.0"
