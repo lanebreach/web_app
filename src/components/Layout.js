@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCamera,
@@ -7,6 +8,8 @@ import {
   faUserEdit
 } from "@fortawesome/pro-regular-svg-icons";
 import { Link } from "@reach/router";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
 const Container = styled.div`
   position: relative;
@@ -28,19 +31,21 @@ const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
     text-align: center;
-    height: 50px;
-    a,
-    div {
+    a {
       width: 25%;
       border: 1px solid #acacac;
       background-color: transparent;
+
       svg {
         max-height: 100%;
         width: 100%;
         height: 100%;
       }
       button {
+        margin: auto;
         display: block;
+        background: transparent;
+        border: none;
         width: -webkit-fill-available;
         height: -webkit-fill-available;
       }
@@ -58,27 +63,41 @@ const GlobalStyle = createGlobalStyle`
 const Layout = ({ children }) => {
   return (
     <Container>
-      <GlobalStyle />
+      <Helmet>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+        />
+        <GlobalStyle />
+      </Helmet>
       {children}
       <nav>
-        <Link to="/">
-          <button type="button" aria-labelledby="homeScreen camera">
-            <FontAwesomeIcon icon={faCamera} size="3x" />
-          </button>
-        </Link>
-        <Link to="/form">
-          <button type="button" aria-labelledby="submitForm">
-            <FontAwesomeIcon icon={faPollH} size="3x" />
-          </button>
-        </Link>
-        <Link to="/">
-          <button type="button" disabled />
-        </Link>
-        <Link to="/user">
-          <button type="button" aria-labelledby="settingsScreen">
-            <FontAwesomeIcon icon={faUserEdit} size="3x" />
-          </button>
-        </Link>
+        <BottomNavigation>
+          <Link to="/">
+            <BottomNavigationAction
+              type="button"
+              aria-labelledby="homeScreen camera"
+              icon={<FontAwesomeIcon icon={faCamera} size="3x" />}
+            />
+          </Link>
+          <Link to="/form">
+            <BottomNavigationAction
+              type="button"
+              aria-labelledby="submitForm"
+              icon={<FontAwesomeIcon icon={faPollH} size="3x" />}
+            />
+          </Link>
+          <Link to="/">
+            <BottomNavigationAction type="button" disabled />
+          </Link>
+          <Link to="/user">
+            <BottomNavigationAction
+              type="button"
+              aria-labelledby="settingsScreen"
+              icon={<FontAwesomeIcon icon={faUserEdit} size="3x" />}
+            />
+          </Link>
+        </BottomNavigation>
       </nav>
     </Container>
   );
