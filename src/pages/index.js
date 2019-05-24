@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CustomCamera from "../components/CustomCamera";
+import Camera from "../components/Camera";
 import ComplaintForm from "../components/ComplaintForm";
 import UserForm from "../components/UserForm";
 import { Router, navigate } from "@reach/router";
@@ -24,7 +24,7 @@ const App = () => {
 
   return (
     <Router>
-      <CustomCamera
+      <Camera
         path="/"
         onTakePhoto={dataUri => {
           console.log(dataUri);

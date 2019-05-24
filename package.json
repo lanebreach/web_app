@@ -37,10 +37,10 @@
     "gatsby-plugin-create-client-paths": "^2.0.5",
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-offline": "^2.1.0",
+    "jslib-html5-camera-photo": "^3.0.2-beta.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
-    "react-html5-camera-photo": "^1.4.0",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
