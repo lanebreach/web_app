@@ -7,6 +7,8 @@ import CameraPhoto, {
 import Layout from "./Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/pro-regular-svg-icons";
+import CircleButton from "./CircleButton";
+import Button from "@material-ui/core/Button";
 
 const StyledFigure = styled.figure`
   position: relative;
@@ -15,19 +17,22 @@ const StyledFigure = styled.figure`
   align-items: baseline;
   video {
     width: 100%;
+    max-width: 60vh;
   }
-  button {
-    border: none;
-    border-radius: 100%;
-    background-color: whitesmoke;
-    width: fit-content;
-    position: absolute;
-    bottom: 8px;
-    padding: 0;
-    margin: 0;
-    transform: scale(1.5);
-    svg {
-      transform: scale(1.1);
+`;
+
+const ResetDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 24px;
+    button {
+      margin-left: 12px;
     }
   }
 `;
@@ -40,23 +45,24 @@ class Camera extends React.Component {
   }
 
   componentDidMount() {
-    this.setupVideo();
+    this.setupVideo(true);
   }
 
   componentDidUpdate() {
-    this.setupVideo();
+    this.setupVideo(false);
   }
 
-  setupVideo() {
+  setupVideo(initialize) {
     if (this.videoRef?.current && !this.props.image) {
-      this.cameraPhoto = new CameraPhoto(this.videoRef.current);
+      if (initialize) this.cameraPhoto = new CameraPhoto(this.videoRef.current);
       this.startCamera();
     }
   }
 
   startCamera() {
+    if (!this.cameraPhoto) this.setupVideo(true);
     this.cameraPhoto
-      .startCamera(FACING_MODES.ENVIRONMENT, { width: 640, height: 640 })
+      ?.startCamera(FACING_MODES.ENVIRONMENT, { width: 640, height: 640 })
       .then(() => {
         console.log("camera is started !");
       })
@@ -70,6 +76,7 @@ class Camera extends React.Component {
       sizeFactor: 1
     };
     this.props.onTakePhoto(this.cameraPhoto.getDataUri(config));
+    this.stopCamera();
   }
 
   stopCamera() {
@@ -88,14 +95,22 @@ class Camera extends React.Component {
     return (
       <Layout>
         {image ? (
-          <div>
+          <ResetDiv>
             <p>You have already taken an image:</p>
             <img src={image} />
-            Reset:{" "}
-            <button type="reset" onClick={() => setImage("")}>
-              reset
-            </button>
-          </div>
+            <div className="row">
+              Reset:{" "}
+              <Button
+                variant="outlined"
+                color="primary"
+                type="submit"
+                type="reset"
+                onClick={() => setImage("")}
+              >
+                Reset
+              </Button>
+            </div>
+          </ResetDiv>
         ) : (
           <StyledFigure>
             <video
@@ -105,14 +120,12 @@ class Camera extends React.Component {
                 this.takePhoto();
               }}
             />
-            <button
-              id="camera-button"
+            <CircleButton
               onClick={() => {
                 this.takePhoto();
               }}
-            >
-              <FontAwesomeIcon icon={faCircle} size="3x" />
-            </button>
+              isClicked={!image}
+            />
           </StyledFigure>
         )}
       </Layout>
