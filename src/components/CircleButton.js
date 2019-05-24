@@ -4,14 +4,17 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   position: absolute;
-  left: 50%;
-  bottom: 20%;
+
+  bottom: 15%;
   height: 40px;
   width: 40px;
+  border: none;
+  background: transparent;
+
   #outer-circle {
     position: absolute;
-    left: -37px;
-
+    left: -18px;
+    top: 0;
     height: 75px;
     width: 75px;
 
