@@ -2,36 +2,33 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Layout from "./Layout";
 import { storeUser } from "../utils/methods";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import Button from "@material-ui/core/Button";
 
 export const Main = styled.main`
   display: flex;
   flex-direction: column;
   form {
+    display: flex;
     flex-direction: column;
-    label {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 10px;
-      input,
-      select,
-      textarea {
-        margin: 0 8px;
-        border: 1px solid black;
-        padding: 4px 8px;
-        border-radius: 8px;
-      }
-    }
-    button {
-      border: 1px solid black;
-      padding: 4px 8px;
+    .formControl {
+      margin-bottom: 16px;
     }
   }
 `;
 
+const StyledButton = styled(Button)`
+  &.disabled {
+    color: #67a33d;
+    border-color: #67a33d;
+  }
+`;
+
 const UserForm = ({ user = {}, setUser }) => {
-  const { emailAddress, fullName, phoneNumber } = user;
+  const { emailAddress = "", fullName = "", phoneNumber = "" } = user;
   const [email, updateEmail] = useState(emailAddress);
   const [name, updateName] = useState(fullName);
   const [phone, updatePhone] = useState(phoneNumber);
@@ -58,42 +55,50 @@ const UserForm = ({ user = {}, setUser }) => {
             setTimeout(() => setSaved(false), 3000);
           }}
         >
-          <label htmlFor="emailAddress">
-            Email:
-            <input
+          <FormControl className="formControl">
+            <InputLabel htmlFor="emailAddress">Email</InputLabel>
+            <Input
+              id="emailAddress"
               name="emailAddress"
-              type="email"
+              value={email}
+              onChange={e => updateEmail(e.target.value)}
               autoComplete="email"
               placeholder="optional"
-              onChange={e => updateEmail(e.target.value)}
-              value={email}
+              type="email"
             />
-          </label>
-          <label htmlFor="fullName">
-            Name:
-            <input
+          </FormControl>
+          <FormControl className="formControl">
+            <InputLabel htmlFor="fullName">Name</InputLabel>
+            <Input
+              id="fullName"
               name="fullName"
-              type="text"
-              autoComplete="name"
-              onChange={e => updateName(e.target.value)}
-              placeholder="optional"
               value={name}
-            />
-          </label>
-          <label htmlFor="phoneNumber">
-            Phone:
-            <input
-              name="phoneNumber"
-              type="tel"
-              autoComplete="tel"
-              onChange={e => updatePhone(e.target.value)}
+              onChange={e => updateName(e.target.value)}
+              autoComplete="name"
               placeholder="optional"
-              value={phone}
+              type="text"
             />
-          </label>
-          <button type="submit" disabled={saved}>
+          </FormControl>
+          <FormControl className="formControl">
+            <InputLabel htmlFor="phoneNumber">Phone</InputLabel>
+            <Input
+              id="phoneNumber"
+              name="phoneNumber"
+              value={phone}
+              onChange={e => updatePhone(e.target.value)}
+              autoComplete="tel"
+              placeholder="optional"
+              type="tel"
+            />
+          </FormControl>
+          <Button
+            variant="outlined"
+            color="primary"
+            type="submit"
+            disabled={saved}
+          >
             {saved ? "Saved!" : "Submit"}
-          </button>
+          </Button>
         </form>
       </Main>
     </Layout>

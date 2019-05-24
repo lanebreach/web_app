@@ -4,6 +4,13 @@ import Layout from "./Layout";
 import { Main } from "./UserForm";
 import { submitRequest } from "../utils/methods";
 import { Link } from "@reach/router";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
 
 const Categories = () => {
   let categories = [
@@ -21,8 +28,8 @@ const Categories = () => {
   ];
   return (
     <>
-      {categories.map(category => (
-        <option key={category}>{category}</option>
+      {categories.map((category, idx) => (
+        <option key={`${category}_${idx}`}>{category}</option>
       ))}
     </>
   );
@@ -32,9 +39,13 @@ const PreviewImage = styled.img`
   max-height: 40vh;
 `;
 
+const StyledForm = styled.form`
+  margin-bottom: 24px;
+`;
+
 const ComplaintForm = ({ image, user }) => {
   const [init, setInit] = useState(false);
-  const [other, setOther] = useState("");
+  const [other, setOther] = useState("Other");
   const [position, setPosition] = useState();
   const [description, setDescription] = useState("");
   const lat = position?.coords?.latitude;
@@ -42,6 +53,7 @@ const ComplaintForm = ({ image, user }) => {
   const categoryRef = useRef();
 
   const handleSubmit = e => {
+    e.preventDefault();
     const category = categoryRef?.current?.target?.value;
     const date = Date.now();
     if (image && description && category) {
@@ -74,37 +86,43 @@ const ComplaintForm = ({ image, user }) => {
     <Layout>
       <Main>
         <h2>Submission</h2>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="category">
-            <select
+        <StyledForm onSubmit={handleSubmit}>
+          <FormControl>
+            <InputLabel htmlFor="category">Age</InputLabel>
+            <Select
               onChange={e => {
                 if (e.target.value === other) {
                   setOther(prompt("Other Category"));
                 }
               }}
+              native={true}
               ref={categoryRef}
+              inputProps={{
+                name: "category",
+                id: "category"
+              }}
             >
               <Categories />
-              Category:
-              <option
-                name="category"
-                id="other"
-                label={other ? `Other: ${other}` : `Other`}
-              >
+              <option id="other" label={other ? `Other: ${other}` : `Other`}>
                 {other}
               </option>
-            </select>
-          </label>
-          <label htmlFor="description">
-            Description:
-            <textarea
-              name="description"
+            </Select>
+          </FormControl>
+          <FormControl className="formControl">
+            <InputLabel htmlFor="description">Description</InputLabel>
+            <Input
+              id="description"
+              multiline={true}
+              rows="4"
+              variant="outlined"
               value={description}
               onChange={e => setDescription(e.target.value)}
             />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
+          </FormControl>
+          <Button variant="outlined" color="primary" type="submit">
+            Submit
+          </Button>
+        </StyledForm>
         <div>
           {image ? (
             <>

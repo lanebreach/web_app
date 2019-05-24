@@ -10,6 +10,7 @@ import {
 import { Link } from "@reach/router";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const Container = styled.div`
   position: relative;
@@ -26,11 +27,13 @@ const Container = styled.div`
   nav {
     position: relative;
     margin-top: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: center;
+    .nav-wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: center;
+    }
     a {
       width: 25%;
       border: 1px solid #acacac;
@@ -39,7 +42,6 @@ const Container = styled.div`
       svg {
         max-height: 100%;
         width: 100%;
-        height: 100%;
       }
       button {
         margin: auto;
@@ -68,23 +70,24 @@ const Layout = ({ children }) => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
         />
-        <GlobalStyle />
       </Helmet>
+      <CssBaseline />
+      <GlobalStyle />
       {children}
       <nav>
-        <BottomNavigation>
+        <BottomNavigation className="nav-wrapper">
           <Link to="/">
             <BottomNavigationAction
               type="button"
               aria-labelledby="homeScreen camera"
-              icon={<FontAwesomeIcon icon={faCamera} size="3x" />}
+              icon={<FontAwesomeIcon icon={faCamera} size="2x" />}
             />
           </Link>
           <Link to="/form">
             <BottomNavigationAction
               type="button"
               aria-labelledby="submitForm"
-              icon={<FontAwesomeIcon icon={faPollH} size="3x" />}
+              icon={<FontAwesomeIcon icon={faPollH} size="2x" />}
             />
           </Link>
           <Link to="/">
@@ -94,7 +97,7 @@ const Layout = ({ children }) => {
             <BottomNavigationAction
               type="button"
               aria-labelledby="settingsScreen"
-              icon={<FontAwesomeIcon icon={faUserEdit} size="3x" />}
+              icon={<FontAwesomeIcon icon={faUserEdit} size="2x" />}
             />
           </Link>
         </BottomNavigation>
