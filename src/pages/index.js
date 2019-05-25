@@ -5,17 +5,20 @@ import ComplaintForm from "../components/ComplaintForm";
 import UserForm from "../components/UserForm";
 import { Router, navigate, Link } from "@reach/router";
 import { getStoredUser, getIsNew, storeNew } from "../utils/methods";
-import Dialog from "react-controlled-dialog";
+import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesSquare } from "@fortawesome/pro-regular-svg-icons";
 
-const StyledModal = styled.dialog`
+const ModalDiv = styled.div`
   justify-content: center;
   align-content: center;
   position: fixed;
   top: calc(50% - 350px);
+  left: calc(50% - 45vw);
+  background-color: white;
+  padding: 20px 40px;
   width: 90vw;
   min-height: 400px;
   text-align: center;
@@ -35,20 +38,6 @@ const StyledModal = styled.dialog`
   }
 `;
 
-const CloseButton = ({ onClick }) => (
-  <button onClick={onClick} aria-label="Close" id="dialog-close">
-    <FontAwesomeIcon icon={faTimesSquare} size="2x" />
-  </button>
-);
-
-const CustomModal = React.forwardRef((props, ref) => {
-  return (
-    <StyledModal {...props} ref={ref}>
-      <div id="box">{props.children}</div>
-    </StyledModal>
-  );
-});
-
 const Div = ({ image, setImage }) => {
   const [isNew, setNew] = useState(getIsNew());
 
@@ -67,40 +56,40 @@ const Div = ({ image, setImage }) => {
   };
   return (
     <Layout>
-      <Dialog
-        isOpen={isNew}
-        setOpen={handleNew}
-        type="modal"
-        DialogComponent={CustomModal}
-        CloseButton={CloseButton}
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={isNew}
       >
-        <h2>Welcome to the Lane Breach Web App!</h2>
-        <p>
-          This is a tool to help you report vehicles blocking bike lanes,
-          [currently only supporting San Francisco]
-        </p>
-        <p>
-          To register a complaint, you can use the camera screen to take a
-          photo, fill out a couple details, and then submit your complaint.
-        </p>
-        <p>
-          If you want SFMTA to be able to follow-up with you, you can{" "}
-          <Link to="user" onClick={handleNew}>
-            <Button variant="outlined" type="button">
-              Add contact info
-            </Button>
-          </Link>
-        </p>
-        <p>Otherwise, click below to proceed!</p>
-        <Button
-          variant="outlined"
-          color="primary"
-          id="dialog-proceed"
-          onClick={handleNew}
-        >
-          Let's go!
-        </Button>
-      </Dialog>
+        <ModalDiv>
+          <h2>Welcome to the Lane Breach Web App!</h2>
+          <p>
+            This is a tool to help you report vehicles blocking bike lanes,
+            [currently only supporting San Francisco]
+          </p>
+          <p>
+            To register a complaint, you can use the camera screen to take a
+            photo, fill out a couple details, and then submit your complaint.
+          </p>
+          <p>
+            If you want SFMTA to be able to follow-up with you, you can{" "}
+            <Link to="user" onClick={handleNew}>
+              <Button variant="outlined" type="button">
+                Add contact info
+              </Button>
+            </Link>
+          </p>
+          <p>Otherwise, click below to proceed!</p>
+          <Button
+            variant="outlined"
+            color="primary"
+            id="dialog-proceed"
+            onClick={handleNew}
+          >
+            Let's go!
+          </Button>
+        </ModalDiv>
+      </Modal>
       {isNew ? null : (
         <Camera
           onTakePhoto={dataUri => {

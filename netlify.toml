@@ -1,0 +1,5 @@
+[dev]
+  base = "/"
+  publish = "/public"
+  command = "yarn build"
+  port=8000
