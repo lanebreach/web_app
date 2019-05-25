@@ -22,3 +22,12 @@ export const storeUser = user => {
     window.localStorage.setItem("user", JSON.stringify(user));
   }
 };
+export const getIsNew = () =>
+  isBrowser() && window.localStorage.getItem("isNew")
+    ? JSON.parse(window.localStorage.getItem("isNew"))
+    : true;
+export const storeNew = isNew => {
+  if (isBrowser()) {
+    window.localStorage.setItem("isNew", JSON.stringify(isNew));
+  }
+};

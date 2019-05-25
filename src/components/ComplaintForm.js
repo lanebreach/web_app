@@ -37,6 +37,7 @@ const Categories = () => {
 
 const PreviewImage = styled.img`
   max-height: 40vh;
+  display: block;
 `;
 
 const StyledForm = styled.form`

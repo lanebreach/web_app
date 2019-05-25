@@ -93,7 +93,7 @@ class Camera extends React.Component {
   render() {
     const { image, setImage } = this.props;
     return (
-      <Layout>
+      <>
         {image ? (
           <ResetDiv>
             <p>You have already taken an image:</p>
@@ -128,7 +128,7 @@ class Camera extends React.Component {
             />
           </StyledFigure>
         )}
-      </Layout>
+      </>
     );
   }
 }
