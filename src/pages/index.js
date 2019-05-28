@@ -15,7 +15,7 @@ const ModalDiv = styled.div`
   justify-content: center;
   align-content: center;
   position: fixed;
-  top: calc(50% - 350px);
+  top: 16px;
   left: calc(50% - 45vw);
   background-color: white;
   padding: 20px 40px;
