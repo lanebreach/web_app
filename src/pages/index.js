@@ -9,7 +9,7 @@ import { Button } from "@material-ui/core";
 import styled from "styled-components";
 import Home from "../components/Home";
 
-const App = () => {
+const IndexPage = () => {
   const [image, setImage] = useState();
   const [init, setInit] = useState(false);
   const [isNew, setNew] = useState();
@@ -37,4 +37,4 @@ const App = () => {
   return <Home image={image} setImage={setImage} setPage={setPage} />;
 };
 
-export default App;
+export default IndexPage;

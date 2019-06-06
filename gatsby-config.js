@@ -1,10 +1,6 @@
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/*`] }
-    },
-    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Lane Breach`,
