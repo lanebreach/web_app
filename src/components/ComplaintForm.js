@@ -44,7 +44,7 @@ const StyledForm = styled.form`
   margin-bottom: 24px;
 `;
 
-const ComplaintForm = ({ image, user }) => {
+const ComplaintForm = ({ image, user, setPage }) => {
   const [init, setInit] = useState(false);
   const [other, setOther] = useState("Other");
   const [position, setPosition] = useState();
@@ -84,7 +84,7 @@ const ComplaintForm = ({ image, user }) => {
     }
   });
   return (
-    <Layout>
+    <Layout setPage={setPage}>
       <Main>
         <h2>Submission</h2>
         <StyledForm onSubmit={handleSubmit}>

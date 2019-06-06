@@ -27,14 +27,14 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const UserForm = ({ user = {}, setUser }) => {
+const UserForm = ({ user = {}, setUser, setPage }) => {
   const { emailAddress = "", fullName = "", phoneNumber = "" } = user;
   const [email, updateEmail] = useState(emailAddress);
   const [name, updateName] = useState(fullName);
   const [phone, updatePhone] = useState(phoneNumber);
   const [saved, setSaved] = useState(false);
   return (
-    <Layout>
+    <Layout setPage={setPage}>
       <Main>
         <p>
           Lane Breach makes it easy to report bike lane blockages to San
