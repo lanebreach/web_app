@@ -58,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const Layout = ({ children }) => {
+const Layout = ({ children, setPage }) => {
   return (
     <Container>
       <Helmet>
@@ -72,7 +72,11 @@ const Layout = ({ children }) => {
       {children}
       <nav>
         <BottomNavigation className="nav-wrapper">
-          <button type="button" aria-labelledby="homeScreen camera">
+          <button
+            type="button"
+            aria-labelledby="homeScreen camera"
+            onClick={() => setPage("home")}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -89,7 +93,11 @@ const Layout = ({ children }) => {
               />
             </svg>
           </button>
-          <button type="button" aria-labelledby="submitForm">
+          <button
+            type="button"
+            aria-labelledby="submitForm"
+            onClick={() => setPage("form")}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -107,7 +115,11 @@ const Layout = ({ children }) => {
             </svg>
           </button>
           <button type="button" disabled />
-          <button type="button" aria-labelledby="settingsScreen">
+          <button
+            type="button"
+            aria-labelledby="settingsScreen"
+            onClick={() => setPage("user")}
+          >
             <svg
               aria-hidden="true"
               focusable="false"

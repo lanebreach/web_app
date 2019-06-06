@@ -33,7 +33,7 @@ const ModalDiv = styled.div`
   }
 `;
 
-const Home = ({ image, setImage }) => {
+const Home = ({ image, setImage, setPage }) => {
   const [isNew, setNew] = useState(getIsNew());
 
   useEffect(() => {
@@ -45,12 +45,16 @@ const Home = ({ image, setImage }) => {
       setNew(true);
     }
   });
-  const handleNew = () => {
+  const handleNew = e => {
+    e;
     storeNew(false);
     setNew(false);
+    if (e.target.closest("button").id === "add-contact") {
+      setPage("user");
+    }
   };
   return (
-    <Layout>
+    <Layout setPage={setPage}>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -68,7 +72,12 @@ const Home = ({ image, setImage }) => {
           </p>
           <p>
             If you want SFMTA to be able to follow-up with you, you can{" "}
-            <Button variant="outlined" type="button" onClick={handleNew}>
+            <Button
+              variant="outlined"
+              type="button"
+              onClick={handleNew}
+              id="add-contact"
+            >
               Add contact info
             </Button>
           </p>
@@ -88,7 +97,7 @@ const Home = ({ image, setImage }) => {
           onTakePhoto={dataUri => {
             console.log(dataUri);
             setImage(dataUri);
-            navigate("/form");
+            setPage("form");
           }}
           image={image}
           setImage={setImage}

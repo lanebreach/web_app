@@ -28,13 +28,13 @@ const App = () => {
     setInit(true);
   }
   if (page === "form") {
-    return <ComplaintForm image={image} user={user} />;
+    return <ComplaintForm image={image} user={user} setPage={setPage} />;
   }
 
   if (page === "user") {
-    return <UserForm user={user} setUser={setUser} />;
+    return <UserForm user={user} setUser={setUser} setPage={setPage} />;
   }
-  return <Home image={image} setImage={setImage} />;
+  return <Home image={image} setImage={setImage} setPage={setPage} />;
 };
 
 export default App;
