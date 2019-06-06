@@ -89,7 +89,7 @@ const ComplaintForm = ({ image, user }) => {
         <h2>Submission</h2>
         <StyledForm onSubmit={handleSubmit}>
           <FormControl>
-            <InputLabel htmlFor="category">Age</InputLabel>
+            <InputLabel htmlFor="category">Category</InputLabel>
             <Select
               onChange={e => {
                 if (e.target.value === other) {

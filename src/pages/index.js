@@ -8,8 +8,6 @@ import { getStoredUser, getIsNew, storeNew } from "../utils/methods";
 import Modal from "@material-ui/core/Modal";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesSquare } from "@fortawesome/pro-regular-svg-icons";
 
 const ModalDiv = styled.div`
   justify-content: center;

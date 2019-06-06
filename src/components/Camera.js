@@ -5,8 +5,6 @@ import CameraPhoto, {
   IMAGE_TYPES
 } from "jslib-html5-camera-photo";
 import Layout from "./Layout";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/pro-regular-svg-icons";
 import CircleButton from "./CircleButton";
 import Button from "@material-ui/core/Button";
 
