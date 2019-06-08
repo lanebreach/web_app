@@ -36,6 +36,9 @@ const ResetDiv = styled.div`
 `;
 
 class Camera extends React.Component {
+  state = {
+    supportedBrowser: true
+  };
   constructor(props, context) {
     super(props, context);
     this.cameraPhoto = null;
@@ -44,6 +47,9 @@ class Camera extends React.Component {
 
   componentDidMount() {
     this.setupVideo(true);
+    if (!("navigator" in window) || !navigator.mediaDevices) {
+      this.setState({ supportedBrowser: false });
+    }
   }
 
   componentDidUpdate() {
@@ -90,6 +96,14 @@ class Camera extends React.Component {
 
   render() {
     const { image, setImage } = this.props;
+    // TODO #4 Support file upload as fallback for camera
+    if (!this.state?.supportedBrowser)
+      return (
+        <p style={{ marginBottom: "100%" }}>
+          We're sorry, but this browser does not support all the features we
+          need for this app to work correctly.
+        </p>
+      );
     return (
       <>
         {image ? (

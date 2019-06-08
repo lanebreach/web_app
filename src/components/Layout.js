@@ -8,6 +8,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 16px);
+  max-height: calc(100vh - 16px);
+  overflow: scroll;
   margin: auto;
   width: 90vw;
   top: 0;
@@ -20,6 +22,7 @@ const Container = styled.div`
   nav {
     position: relative;
     margin-top: auto;
+    max-height: 50px;
     .nav-wrapper {
       width: 100%;
       display: flex;
