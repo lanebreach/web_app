@@ -55,9 +55,9 @@ const ComplaintForm = ({ image, user, setPage }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const category = categoryRef?.current?.target?.value;
+    const category = categoryRef?.current?.querySelector("#category")?.value;
     const date = Date.now();
-    if (image && description && category) {
+    if (image) {
       const report = {
         category,
         description,
