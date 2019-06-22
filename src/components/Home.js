@@ -56,7 +56,7 @@ const Home = ({ image, setImage, setPage }) => {
     }
   };
   return (
-    <Layout setPage={setPage}>
+    <>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -97,7 +97,6 @@ const Home = ({ image, setImage, setPage }) => {
       {isNew ? null : (
         <Camera
           onTakePhoto={dataUri => {
-            console.log(dataUri);
             setImage(dataUri);
             setPage("form");
           }}
@@ -105,7 +104,7 @@ const Home = ({ image, setImage, setPage }) => {
           setImage={setImage}
         />
       )}
-    </Layout>
+    </>
   );
 };
 

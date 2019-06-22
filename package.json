@@ -26,6 +26,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@material-ui/core": "^4.0.0",
     "@rehooks/window-size": "^1.0.2",
+    "aws-sdk": "^2.480.0",
     "babel-preset-gatsby": "^0.1.11",
     "core-js": "2.6.5",
     "gatsby": "^2.3.35",

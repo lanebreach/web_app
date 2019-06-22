@@ -44,7 +44,14 @@ const StyledForm = styled.form`
   margin-bottom: 24px;
 `;
 
-const ComplaintForm = ({ image, user, setPage }) => {
+const ComplaintForm = ({
+  image,
+  user,
+  setPage,
+  reset,
+  success,
+  triggerSuccess
+}) => {
   const [init, setInit] = useState(false);
   const [other, setOther] = useState("Other");
   const [position, setPosition] = useState();
@@ -57,6 +64,7 @@ const ComplaintForm = ({ image, user, setPage }) => {
     e.preventDefault();
     const category = categoryRef?.current?.querySelector("#category")?.value;
     const date = Date.now();
+
     if (image) {
       const report = {
         category,
@@ -64,9 +72,11 @@ const ComplaintForm = ({ image, user, setPage }) => {
         lat,
         long,
         date,
+        image,
         ...user
       };
-      submitRequest(report);
+      console.log("submitting request");
+      submitRequest(report, triggerSuccess, reset);
     }
   };
 
@@ -75,7 +85,6 @@ const ComplaintForm = ({ image, user, setPage }) => {
       setInit(true);
       try {
         window.navigator.geolocation.getCurrentPosition(position => {
-          console.log(position);
           setPosition(position);
         });
       } catch (err) {
@@ -84,61 +93,73 @@ const ComplaintForm = ({ image, user, setPage }) => {
     }
   });
   return (
-    <Layout setPage={setPage}>
-      <Main>
-        <h2>Submission</h2>
-        <StyledForm onSubmit={handleSubmit}>
-          <FormControl>
-            <InputLabel htmlFor="category">Category</InputLabel>
-            <Select
-              onChange={e => {
-                if (e.target.value === other) {
-                  setOther(prompt("Other Category"));
-                }
+    <Main>
+      <h2>Submission</h2>
+      <StyledForm onSubmit={handleSubmit}>
+        <FormControl>
+          <InputLabel htmlFor="category">Category</InputLabel>
+          <Select
+            onChange={e => {
+              if (e.target.value === other) {
+                setOther(prompt("Other Category"));
+              }
+            }}
+            native={true}
+            ref={categoryRef}
+            inputProps={{
+              name: "category",
+              id: "category"
+            }}
+          >
+            <Categories />
+            <option id="other" label={other ? `Other: ${other}` : `Other`}>
+              {other}
+            </option>
+          </Select>
+        </FormControl>
+        <FormControl className="formControl">
+          <InputLabel htmlFor="description">Description</InputLabel>
+          <Input
+            id="description"
+            multiline={true}
+            rows="4"
+            variant="outlined"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+          />
+        </FormControl>
+        <Button
+          variant="outlined"
+          color="primary"
+          type="submit"
+          disabled={!position}
+        >
+          Submit
+        </Button>
+        {!position ? <p>Please wait while we identify your location</p> : null}
+      </StyledForm>
+      <div>
+        {image ? (
+          <>
+            Here is the image you're submitting:
+            <PreviewImage src={image} alt="captured image" />
+          </>
+        ) : (
+          <>
+            You haven't captured an image yet.{" "}
+            <a
+              onClick={e => {
+                e.preventDefault();
+                setPage("home");
               }}
-              native={true}
-              ref={categoryRef}
-              inputProps={{
-                name: "category",
-                id: "category"
-              }}
+              href=""
             >
-              <Categories />
-              <option id="other" label={other ? `Other: ${other}` : `Other`}>
-                {other}
-              </option>
-            </Select>
-          </FormControl>
-          <FormControl className="formControl">
-            <InputLabel htmlFor="description">Description</InputLabel>
-            <Input
-              id="description"
-              multiline={true}
-              rows="4"
-              variant="outlined"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-            />
-          </FormControl>
-          <Button variant="outlined" color="primary" type="submit">
-            Submit
-          </Button>
-        </StyledForm>
-        <div>
-          {image ? (
-            <>
-              Here is the image you're submitting:
-              <PreviewImage src={image} alt="captured image" />
-            </>
-          ) : (
-            <>
-              You haven't captured an image yet.{" "}
-              <Link to="/">Take a photo</Link>
-            </>
-          )}
-        </div>
-      </Main>
-    </Layout>
+              Take a photo
+            </a>
+          </>
+        )}
+      </div>
+    </Main>
   );
 };
 export default ComplaintForm;
