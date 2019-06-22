@@ -29,7 +29,7 @@ function dataURItoBlob(dataURI) {
   return blob;
 }
 
-export const submitRequest = async (data, setSuccess, reset) => {
+export const submitRequest = async (data, triggerSuccess, reset) => {
   let media_url;
   const {
     category,
@@ -60,7 +60,7 @@ export const submitRequest = async (data, setSuccess, reset) => {
   media_url = upload?.Location;
 
   return new Promise((resolve, reject) => {
-    setSuccess(true);
+    triggerSuccess();
     const apiKey = process.env.GATSBY_API_KEY;
     let domain;
     if (process.env.NODE_ENV === "production") {
