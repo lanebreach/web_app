@@ -19,6 +19,10 @@ const IndexPage = () => {
     fullName: "",
     phoneNumber: ""
   });
+  const reset = () => {
+    setImage("");
+    setPage("home");
+  };
 
   if (!init) {
     const storedUser = getStoredUser();
@@ -28,7 +32,14 @@ const IndexPage = () => {
     setInit(true);
   }
   if (page === "form") {
-    return <ComplaintForm image={image} user={user} setPage={setPage} />;
+    return (
+      <ComplaintForm
+        image={image}
+        user={user}
+        setPage={setPage}
+        reset={reset}
+      />
+    );
   }
 
   if (page === "user") {

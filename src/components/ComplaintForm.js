@@ -44,17 +44,15 @@ const StyledForm = styled.form`
   margin-bottom: 24px;
 `;
 
-const ComplaintForm = ({ image, user, setPage }) => {
+const ComplaintForm = ({ image, user, setPage, reset }) => {
   const [init, setInit] = useState(false);
   const [other, setOther] = useState("Other");
   const [position, setPosition] = useState();
   const [description, setDescription] = useState("");
+  const [success, setSuccess] = useState(false);
   const lat = position?.coords?.latitude;
   const long = position?.coords?.longitude;
   const categoryRef = useRef();
-  const accessKeyId = process.env.GATSBY_API_KEY;
-  const secretAccessKey = process.env.GATSBY_SECRET_KEY;
-  console.log(accessKeyId);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -69,13 +67,10 @@ const ComplaintForm = ({ image, user, setPage }) => {
         long,
         date,
         image,
-        s3Config: {
-          accessKeyId,
-          secretAccessKey
-        },
         ...user
       };
-      submitRequest(report);
+      console.log("submitting request");
+      submitRequest(report, setSuccess, reset);
     }
   };
 
@@ -93,6 +88,7 @@ const ComplaintForm = ({ image, user, setPage }) => {
   });
   return (
     <Layout setPage={setPage}>
+      {success ? <h1>success!</h1> : null}
       <Main>
         <h2>Submission</h2>
         <StyledForm onSubmit={handleSubmit}>
@@ -150,10 +146,11 @@ const ComplaintForm = ({ image, user, setPage }) => {
             <>
               You haven't captured an image yet.{" "}
               <a
-                href={e => {
+                onClick={e => {
                   e.preventDefault();
                   setPage("home");
                 }}
+                href=""
               >
                 Take a photo
               </a>

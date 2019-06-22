@@ -1,4 +1,6 @@
 import AWS from "aws-sdk";
+const accessKeyId = process.env.GATSBY_ACCESS_KEY;
+const secretAccessKey = process.env.GATSBY_SECRET_KEY;
 
 function dataURItoBlob(dataURI) {
   // convert base64 to raw binary data held in a string
@@ -27,7 +29,7 @@ function dataURItoBlob(dataURI) {
   return blob;
 }
 
-export const submitRequest = async data => {
+export const submitRequest = async (data, setSuccess, reset) => {
   let media_url;
   const {
     category,
@@ -37,27 +39,28 @@ export const submitRequest = async data => {
     phoneNumber,
     lat,
     long,
-    image,
-    s3Config
+    image
   } = data;
 
-  var s3 = new AWS.S3(s3Config);
+  var s3 = new AWS.S3({ accessKeyId, secretAccessKey, region: "us-west-1" });
 
   var params = {
     Bucket: "lane-breach",
-    Key: `311-sf/temp-images/\(filename).jpg`,
+    Key: `311-sf/temp-images/${Date.now()}-img.jpg`,
     Body: dataURItoBlob(image)
   };
   const upload = await new Promise((resolve, reject) =>
     s3.upload(params, function(err, data) {
       if (err) reject(err);
+      reset();
       resolve(data);
     })
   );
 
-  media_url = upload?.path;
+  media_url = upload?.Location;
 
   return new Promise((resolve, reject) => {
+    setSuccess(true);
     const apiKey = process.env.GATSBY_API_KEY;
     let domain;
     if (process.env.NODE_ENV === "production") {
@@ -66,16 +69,8 @@ export const submitRequest = async data => {
       domain = "https://mobile311-dev.sfgov.org/open311/v2/requests.json";
     }
     // structure fetch request;
-    const formattedDescription = `[${category}] ${description}
-
-${
-  fullName || emailAddress || phoneNumber
-    ? `Request submitted by:
-${fullName}
-${emailAddress}
-${phoneNumber}`
-    : ""
-}`;
+    const formattedDescription = `[${category}] ${description.trim() ||
+      "Blocked bike lane"}`;
     domain;
     apiKey;
     data; //?
@@ -88,6 +83,7 @@ ${phoneNumber}`
       first_name,
       last_name,
       phone: phoneNumber,
+      description: formattedDescription,
       media_url,
       "attribute[Nature_of_request]": "Blocking_Bicycle_Lane"
     };
@@ -96,11 +92,13 @@ ${phoneNumber}`
       method: "POST",
       mode: "no-cors",
       body: new URLSearchParams(parameters)
-    }).then(response => {
-      let buffer = response.text().then(text => {
-        console.log(text);
+    })
+      .then(response => {
+        resolve(response.text());
+      })
+      .catch(error => {
+        reject(error);
       });
-    });
   });
 };
 
