@@ -97,7 +97,6 @@ const Home = ({ image, setImage, setPage }) => {
       {isNew ? null : (
         <Camera
           onTakePhoto={dataUri => {
-            console.log(dataUri);
             setImage(dataUri);
             setPage("form");
           }}

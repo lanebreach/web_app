@@ -52,11 +52,15 @@ const ComplaintForm = ({ image, user, setPage }) => {
   const lat = position?.coords?.latitude;
   const long = position?.coords?.longitude;
   const categoryRef = useRef();
+  const accessKeyId = process.env.GATSBY_API_KEY;
+  const secretAccessKey = process.env.GATSBY_SECRET_KEY;
+  console.log(accessKeyId);
 
   const handleSubmit = e => {
     e.preventDefault();
     const category = categoryRef?.current?.querySelector("#category")?.value;
     const date = Date.now();
+
     if (image) {
       const report = {
         category,
@@ -64,6 +68,11 @@ const ComplaintForm = ({ image, user, setPage }) => {
         lat,
         long,
         date,
+        image,
+        s3Config: {
+          accessKeyId,
+          secretAccessKey
+        },
         ...user
       };
       submitRequest(report);
@@ -75,7 +84,6 @@ const ComplaintForm = ({ image, user, setPage }) => {
       setInit(true);
       try {
         window.navigator.geolocation.getCurrentPosition(position => {
-          console.log(position);
           setPosition(position);
         });
       } catch (err) {
@@ -120,9 +128,17 @@ const ComplaintForm = ({ image, user, setPage }) => {
               onChange={e => setDescription(e.target.value)}
             />
           </FormControl>
-          <Button variant="outlined" color="primary" type="submit">
+          <Button
+            variant="outlined"
+            color="primary"
+            type="submit"
+            disabled={!position}
+          >
             Submit
           </Button>
+          {!position ? (
+            <p>Please wait while we identify your location</p>
+          ) : null}
         </StyledForm>
         <div>
           {image ? (
@@ -133,7 +149,14 @@ const ComplaintForm = ({ image, user, setPage }) => {
           ) : (
             <>
               You haven't captured an image yet.{" "}
-              <Link to="/">Take a photo</Link>
+              <a
+                href={e => {
+                  e.preventDefault();
+                  setPage("home");
+                }}
+              >
+                Take a photo
+              </a>
             </>
           )}
         </div>
