@@ -62,7 +62,7 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
 
   return new Promise((resolve, reject) => {
     const apiKey = process.env.GATSBY_API_KEY;
-    const domain = process.env.GATSBY_311_URL;
+    let domain = `${process.env.GATSBY_311_URL}/open311/v2/requests.json`;
     // structure fetch request;
     const formattedDescription = `[${category}] ${description.trim() ||
       "Blocked bike lane"}`;
