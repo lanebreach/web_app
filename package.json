@@ -33,6 +33,8 @@
     "gatsby-plugin-create-client-paths": "^2.0.5",
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-offline": "^2.1.0",
+    "gatsby-plugin-static-folders": "^1.0.1",
+    "gatsby-source-filesystem": "^2.1.1",
     "jslib-html5-camera-photo": "^3.0.2-beta.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

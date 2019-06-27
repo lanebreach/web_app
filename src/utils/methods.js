@@ -30,11 +30,12 @@ function dataURItoBlob(dataURI) {
 }
 
 export const submitRequest = async (data, triggerSuccess, reset) => {
+  triggerSuccess();
   let media_url;
   const {
     category,
     description,
-    fullName,
+    fullName = "",
     emailAddress,
     phoneNumber,
     lat,
@@ -60,7 +61,6 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
   media_url = upload?.Location;
 
   return new Promise((resolve, reject) => {
-    triggerSuccess();
     const apiKey = process.env.GATSBY_API_KEY;
     let domain;
     if (process.env.NODE_ENV === "production") {
