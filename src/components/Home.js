@@ -16,7 +16,7 @@ const ModalDiv = styled.div`
   padding: 20px 40px;
   width: 90vw;
   max-height: calc(100vh - 32px);
-  overflow: scroll;
+  overflow-y: scroll;
   min-height: 400px;
   text-align: center;
   align-self: center;

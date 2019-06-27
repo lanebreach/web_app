@@ -9,7 +9,7 @@ const Container = styled.div`
   position: relative;
   height: calc(100vh - 16px);
   max-height: calc(100vh - 16px);
-  overflow: scroll;
+  overflow-y: scroll;
   margin: auto;
   width: 90vw;
   top: 0;
@@ -20,11 +20,15 @@ const Container = styled.div`
     max-width: 100%;
   }
   nav {
-    position: relative;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
     margin-top: auto;
     max-height: 50px;
-
-    width: 100%;
+    height: 50px;
+    width: 100vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

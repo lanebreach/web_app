@@ -9,11 +9,18 @@ import CircleButton from "./CircleButton";
 import Button from "@material-ui/core/Button";
 
 const StyledFigure = styled.figure`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: baseline;
+  max-width: 100vw;
+  height: -webkit-fill-available;
+  background: black;
+  margin: 0;
   video {
+    margin-top: calc(((100vh - 50px) - 100vw) * 0.33);
     width: 100%;
     max-width: 60vh;
   }
@@ -124,14 +131,12 @@ class Camera extends React.Component {
             </div>
           </ResetDiv>
         ) : (
-          <StyledFigure>
-            <video
-              ref={this.videoRef}
-              autoPlay
-              onClick={() => {
-                this.takePhoto();
-              }}
-            />
+          <StyledFigure
+            onClick={() => {
+              this.takePhoto();
+            }}
+          >
+            <video ref={this.videoRef} autoPlay />
             <CircleButton
               onClick={() => {
                 this.takePhoto();
