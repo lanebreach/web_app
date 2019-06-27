@@ -62,12 +62,7 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
 
   return new Promise((resolve, reject) => {
     const apiKey = process.env.GATSBY_API_KEY;
-    let domain;
-    if (process.env.NODE_ENV === "production") {
-      domain = "https://mobile311.sfgov.org/open311/v2/requests.json";
-    } else {
-      domain = "https://mobile311-dev.sfgov.org/open311/v2/requests.json";
-    }
+    const domain = process.env.GATSBY_311_URL;
     // structure fetch request;
     const formattedDescription = `[${category}] ${description.trim() ||
       "Blocked bike lane"}`;
