@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  position: absolute;
-
-  bottom: 15%;
-  height: 40px;
+  position: relative;
+  left: 30px;
   width: 40px;
   border: none;
   background: transparent;
@@ -57,14 +55,16 @@ const StyledButton = styled.button`
   }
 `;
 
-export const CircleButton = ({ onClick, isClicked, className }) => {
+export const CircleButton = ({ isClicked, className }) => {
   const innerCircleClasses = isClicked ? "is-clicked" : "";
   return (
-    <StyledButton id="container-circles" className={className}>
-      <div id="outer-circle" onClick={onClick}>
-        <div id="inner-circle" className={innerCircleClasses} />
-      </div>
-    </StyledButton>
+    <div style={{ position: "relative", height: "100px", width: "100px" }}>
+      <StyledButton id="container-circles" className={className}>
+        <div id="outer-circle">
+          <div id="inner-circle" className={innerCircleClasses} />
+        </div>
+      </StyledButton>
+    </div>
   );
 };
 

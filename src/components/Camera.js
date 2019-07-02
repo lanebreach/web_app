@@ -13,14 +13,15 @@ const StyledFigure = styled.figure`
   top: 0;
   left: 0;
   display: flex;
-  justify-content: center;
-  align-items: baseline;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   max-width: 100vw;
   height: -webkit-fill-available;
   background: black;
   margin: 0;
   video {
-    margin-top: calc(((100vh - 50px) - 100vw) * 0.33);
+    /* margin-top: calc(((100vh - 50px) - 100vw) * 0.33); */
     width: 100%;
     max-width: 60vh;
   }
@@ -137,12 +138,7 @@ class Camera extends React.Component {
             }}
           >
             <video ref={this.videoRef} autoPlay />
-            <CircleButton
-              onClick={() => {
-                this.takePhoto();
-              }}
-              isClicked={!image}
-            />
+            <CircleButton isClicked={!image} />
           </StyledFigure>
         )}
       </>
