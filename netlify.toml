@@ -1,3 +1,6 @@
 [dev]
   base = "/"
   publish = "/public"
+
+[build]
+  functions = "lambda"

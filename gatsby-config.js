@@ -1,4 +1,17 @@
+var proxy = require("http-proxy-middleware");
+
 module.exports = {
+  developMiddleware: app => {
+    app.use(
+      "/.netlify/functions/",
+      proxy({
+        target: "http://localhost:9000",
+        pathRewrite: {
+          "/.netlify/functions/": ""
+        }
+      })
+    );
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
@@ -16,7 +29,7 @@ module.exports = {
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
         display: `standalone`,
-        icon: `src/images/blfa-icon.png`
+        icon: `src/images/blfa-icon.jpg`
       }
     },
     `gatsby-plugin-offline`

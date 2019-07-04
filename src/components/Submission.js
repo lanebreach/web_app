@@ -30,20 +30,31 @@ const Redo = () => (
 
 const Submission = ({ submission }) => {
   const {
-    category,
+    address,
     description,
-    fullName = "",
-    emailAddress,
-    phoneNumber,
     lat,
     long,
-    image
+    media_url,
+    requested_datetime,
+    service_code,
+    service_name,
+    service_request_id,
+    status,
+    updated_datetime
   } = submission;
+  const domain = process.env.GATSBY_311_URL;
   return (
     <StyledDiv>
       <button onClick={() => resubmit(submission)} type="button" />
-      <img src={image} />
-      {description}
+      <a href={`${domain}/reports/${service_request_id}`}>
+        <img src={media_url} alt="thumbnail" />
+      </a>
+      <div>
+        <a href={`${domain}/reports/${service_request_id}`}>
+          <strong>{address}</strong>
+        </a>
+        <p>{description}</p>
+      </div>
     </StyledDiv>
   );
 };
