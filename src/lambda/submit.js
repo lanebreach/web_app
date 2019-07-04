@@ -1,5 +1,6 @@
 const axios = require("axios");
 const AWS = require("aws-sdk");
+const URLSearchParams = require("urlsearchparams");
 
 exports.handler = async function(event, context, callback) {
   const accessKeyId = process.env.ACCESS_KEY;
