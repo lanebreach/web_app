@@ -82,6 +82,11 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
       media_url,
       "attribute[Nature_of_request]": "Blocking_Bicycle_Lane"
     };
+    addSubmission({
+      ...data,
+      description: formattedDescription,
+      image: media_url
+    });
 
     fetch(domain, {
       method: "POST",
@@ -115,5 +120,37 @@ export const getIsNew = () =>
 export const storeNew = isNew => {
   if (isBrowser()) {
     window.localStorage.setItem("isNew", JSON.stringify(isNew));
+  }
+};
+
+export const getSubmissions = () => {
+  if (isBrowser() && window.localStorage.getItem("submissions")) {
+    return JSON.parse(window.localStorage.getItem("submissions"));
+  }
+  return [];
+};
+
+export const addSubmission = submission => {
+  if (isBrowser) {
+    const submissions = getSubmissions();
+    submissions.unshift(submission);
+    window.localStorage.setItem("submissions", JSON.stringify(submissions));
+  }
+};
+
+const updateSubmission = (
+  newSubmission,
+  filterMethod = submission => submission === newSubmission
+) => {
+  if (isBrowser) {
+    const submissions = getSubmissions();
+    const target = submissions.find(submission => filterMethod(submission));
+    if (!target) {
+      console.warn("Couldn't find a submission matching those parameters");
+      return;
+    }
+    const index = submissions.indexOf(target);
+    submissions.splice(index, 1, newSubmission);
+    window.localStorage.setItem("submissions", JSON.stringify(submissions));
   }
 };
