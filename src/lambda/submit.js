@@ -1,5 +1,6 @@
 const axios = require("axios");
 const AWS = require("aws-sdk");
+const { URL, URLSearchParams } = require("universal-url");
 
 exports.handler = async function(event, context, callback) {
   const accessKeyId = process.env.ACCESS_KEY;
@@ -72,7 +73,6 @@ exports.handler = async function(event, context, callback) {
       "attribute[Nature_of_request]": "Blocking_Bicycle_Lane"
     };
 
-    require("url-search-params-polyfill");
     axios
       .post(`${domain}?${new URLSearchParams(parameters).toString()}`)
       .then(function({ data }) {
