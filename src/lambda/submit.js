@@ -1,6 +1,7 @@
 const axios = require("axios");
 const AWS = require("aws-sdk");
-const { URL, URLSearchParams } = require("universal-url");
+import { URLSearchParams } from "url";
+global.URLSearchParams = URLSearchParams;
 
 exports.handler = async function(event, context, callback) {
   const accessKeyId = process.env.ACCESS_KEY;
