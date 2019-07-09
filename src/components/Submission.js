@@ -40,12 +40,15 @@ const Submission = ({ submission }) => {
     service_name,
     service_request_id,
     status,
-    updated_datetime
+    updated_datetime,
+    isConverted = true
   } = submission;
   const domain = process.env.GATSBY_311_URL;
   return (
     <StyledDiv>
-      <button onClick={() => resubmit(submission)} type="button" />
+      {!isConverted ? (
+        <button onClick={() => resubmit(submission)} type="button" />
+      ) : null}
       <a href={`${domain}/reports/${service_request_id}`}>
         <img src={media_url} alt="thumbnail" />
       </a>

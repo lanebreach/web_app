@@ -53,6 +53,7 @@ exports.handler = async function(event, context, callback) {
       })
     );
     media_url = upload?.Location;
+    console.log(media_url);
 
     const domain = `${url}/open311/v2/requests.json`;
     const formattedDescription = `[${category}] ${description.trim() ||
@@ -78,7 +79,7 @@ exports.handler = async function(event, context, callback) {
       .post(`${domain}?${new URLSearchParams(parameters).toString()}`)
       .then(function({ data }) {
         console.log(data);
-        let body;
+        let body = "";
 
         // Happy path, return object with token in it
         if (data[0]?.token) {
@@ -93,14 +94,18 @@ exports.handler = async function(event, context, callback) {
 
         return sendBody(body);
       })
-      .catch(function(error) {
-        console.error(error);
-        callback(null, {
+      .catch(function(err) {
+        console.error(err);
+        callback(err, {
           statusCode: 500,
-          body: error
+          body: err
         });
       });
   } catch (err) {
     console.error("Error handling s3 upload:", err);
+    callback(err, {
+      statusCode: 500,
+      body: "Something went wrong"
+    });
   }
 };
