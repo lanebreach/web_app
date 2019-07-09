@@ -2,8 +2,17 @@ const axios = require("axios");
 
 exports.handler = async function(event, context, callback) {
   const url = process.env.GATSBY_311_URL;
-  conssole.log(event.body);
-  const data = JSON.parse(event.body);
+  console.log(event.body);
+  try {
+    const data = JSON.parse(event.body);
+  } catch (err) {
+    console.error(err);
+    callback(err, {
+      statusCode: 500,
+      body: "Something went wrong parsing your request"
+    });
+  }
+
   const { token } = data;
 
   function sendBody(body) {
