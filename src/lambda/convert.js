@@ -2,6 +2,7 @@ const axios = require("axios");
 
 exports.handler = async function(event, context, callback) {
   const url = process.env.GATSBY_311_URL;
+  conssole.log(event.body);
   const data = JSON.parse(event.body);
   const { token } = data;
 
