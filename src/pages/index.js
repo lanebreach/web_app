@@ -9,6 +9,7 @@ import { Button } from "@material-ui/core";
 import styled from "styled-components";
 import Home from "../components/Home";
 import gif from "../images/Smile.gif";
+import Submissions from "../components/Submissions";
 
 const SuccessScreen = styled.div`
   position: fixed;
@@ -90,6 +91,9 @@ const IndexPage = ({ data }) => {
 
     if (page === "user") {
       return <UserForm user={user} setUser={setUser} setPage={setPage} />;
+    }
+    if (page === "submissions") {
+      return <Submissions setPage={setPage} />;
     }
     return <Home image={image} setImage={setImage} setPage={setPage} />;
   };

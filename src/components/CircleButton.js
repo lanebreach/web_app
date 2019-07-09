@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -6,6 +6,7 @@ const StyledButton = styled.button`
   position: relative;
   left: 30px;
   width: 40px;
+  margin-bottom: 7vh;
   border: none;
   background: transparent;
 
@@ -55,10 +56,16 @@ const StyledButton = styled.button`
   }
 `;
 
-export const CircleButton = ({ isClicked, className }) => {
+export const CircleButton = ({ className }) => {
+  const [isClicked, setClicked] = useState(false);
   const innerCircleClasses = isClicked ? "is-clicked" : "";
+
   return (
-    <div style={{ position: "relative", height: "100px", width: "100px" }}>
+    <div
+      style={{ position: "relative", height: "100px", width: "100px" }}
+      onMouseDown={() => setClicked(true)}
+      onMouseUp={() => setClicked(false)}
+    >
       <StyledButton id="container-circles" className={className}>
         <div id="outer-circle">
           <div id="inner-circle" className={innerCircleClasses} />
@@ -69,7 +76,6 @@ export const CircleButton = ({ isClicked, className }) => {
 };
 
 CircleButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
   isClicked: PropTypes.bool.isRequired
 };
 
