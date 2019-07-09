@@ -20,7 +20,7 @@ exports.handler = async function(event, context, callback) {
   const url = process.env.GATSBY_311_URL;
   console.log(event.body);
   try {
-    const data = JSON.parse(event.body);
+    const data = JSON.parse(event?.body);
   } catch (err) {
     console.error(err);
     handleErr(err);

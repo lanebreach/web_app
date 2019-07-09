@@ -8,6 +8,14 @@ import Layout from "./Layout";
 import CircleButton from "./CircleButton";
 import Button from "@material-ui/core/Button";
 
+const ButtonsDiv = styled.div`
+  background-color: white;
+  position: fixed;
+  input {
+    background-color: white;
+  }
+`;
+
 const StyledFigure = styled.figure`
   position: fixed;
   top: 0;
@@ -93,6 +101,19 @@ class Camera extends React.Component {
     this.stopCamera();
   }
 
+  handleInput(file) {
+    var reader = new FileReader();
+    var uri = reader.readAsDataURL(this.inputRef?.current?.files[0]);
+    const { onTakePhoto } = this.props;
+    reader.addEventListener(
+      "load",
+      function() {
+        onTakePhoto(reader.result);
+      },
+      false
+    );
+  }
+
   stopCamera() {
     this.cameraPhoto
       .stopCamera()
@@ -103,7 +124,7 @@ class Camera extends React.Component {
         console.log("No camera to stop!:", error);
       });
   }
-
+  inputRef = React.createRef();
   render() {
     const { image, setImage } = this.props;
     // TODO #4 Support file upload as fallback for camera
@@ -134,14 +155,30 @@ class Camera extends React.Component {
             </div>
           </ResetDiv>
         ) : (
-          <StyledFigure
-            onClick={() => {
-              this.takePhoto();
-            }}
-          >
-            <video ref={this.videoRef} autoPlay />
-            <CircleButton isClicked={!image} />
-          </StyledFigure>
+          <>
+            <StyledFigure
+              onClick={() => {
+                this.takePhoto();
+              }}
+            >
+              <video ref={this.videoRef} autoPlay />
+            </StyledFigure>
+            <ButtonsDiv>
+              <CircleButton isClicked={!image} />
+              <label htmlFor="camera-input">
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  name="camera-input"
+                  ref={this.inputRef}
+                  onChange={e => {
+                    this.handleInput(e.target.files[0]);
+                  }}
+                />
+              </label>
+            </ButtonsDiv>
+          </>
         )}
       </>
     );
