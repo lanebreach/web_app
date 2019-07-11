@@ -46,6 +46,7 @@ const StyledForm = styled.form`
 
 const ComplaintForm = ({
   image,
+  setImage,
   user,
   setPage,
   reset,
@@ -143,6 +144,20 @@ const ComplaintForm = ({
           <>
             Here is the image you're submitting:
             <PreviewImage src={image} alt="captured image" />
+            <br />
+            Reset:{" "}
+            <Button
+              variant="outlined"
+              color="primary"
+              type="submit"
+              type="reset"
+              onClick={() => {
+                setImage("");
+                setPage("home");
+              }}
+            >
+              Reset
+            </Button>
           </>
         ) : (
           <>

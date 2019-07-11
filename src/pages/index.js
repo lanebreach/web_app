@@ -80,6 +80,7 @@ const IndexPage = ({ data }) => {
       return (
         <ComplaintForm
           image={image}
+          setImage={setImage}
           user={user}
           setPage={setPage}
           reset={reset}

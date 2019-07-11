@@ -7,11 +7,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 const Container = styled.div`
   position: relative;
-  height: calc(100vh - 16px);
-  max-height: calc(100vh - 16px);
+  height: 100vh;
+  max-height: calc(100vh - 50px);
   overflow-y: scroll;
+  overflow-x: hidden;
   margin: auto;
-  width: 90vw;
+  padding: 0 10vw;
   top: 0;
   left: 0;
   display: flex;
@@ -19,41 +20,42 @@ const Container = styled.div`
   img {
     max-width: 100%;
   }
-  nav {
-    background-color: white;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    margin-top: auto;
-    max-height: 50px;
-    height: 50px;
-    width: 100vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: center;
+`;
 
-    svg {
-      height: 30px;
-      max-height: 100%;
-      width: 100%;
-    }
-    button {
-      margin: auto;
-      display: block;
-      background: transparent;
-      border: none;
-      width: -webkit-fill-available;
-      height: -webkit-fill-available;
-      width: 25%;
-      border: 1px solid #acacac;
-      background-color: transparent;
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      justify-content: center;
-    }
+const Nav = styled.nav`
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  margin-top: auto;
+  max-height: 50px;
+  height: 50px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+
+  svg {
+    height: 30px;
+    max-height: 100%;
+    width: 100%;
+  }
+  button {
+    box-sizing: border-box;
+    margin: auto;
+    display: block;
+    background: transparent;
+    border: none;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    border: 1px solid #acacac;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
   }
 `;
 
@@ -76,7 +78,7 @@ const Layout = ({ children, setPage }) => {
       <CssBaseline />
       <GlobalStyle />
       {children}
-      <nav>
+      <Nav>
         <button
           type="button"
           aria-labelledby="homeScreen camera"
@@ -161,7 +163,7 @@ const Layout = ({ children, setPage }) => {
             />
           </svg>
         </button>
-      </nav>
+      </Nav>
     </Container>
   );
 };
