@@ -33,6 +33,7 @@
     "babel-preset-gatsby": "^0.1.11",
     "blob": "^0.0.5",
     "core-js": "2.6.5",
+    "detect-browser": "^4.6.0",
     "gatsby": "^2.3.35",
     "gatsby-plugin-create-client-paths": "^2.0.5",
     "gatsby-plugin-manifest": "^2.1.1",

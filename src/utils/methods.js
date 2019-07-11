@@ -1,4 +1,5 @@
 import axios from "axios";
+import { detect } from "detect-browser";
 
 function dataURItoBlob(dataURI) {
   // convert base64 to raw binary data held in a string
@@ -144,4 +145,17 @@ const updateSubmission = (
     submissions.splice(index, 1, newSubmission);
     window.localStorage.setItem("submissions", JSON.stringify(submissions));
   }
+};
+
+export const checkHappyPath = () => {
+  if (isBrowser()) {
+    const browser = detect();
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // Currently only Chrome supports the happy path with camera permissions and functionality
+    if (browser.name === "chrome" && !iOS) {
+      return true;
+    }
+  }
+  return false;
 };

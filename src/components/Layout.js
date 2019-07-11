@@ -48,7 +48,9 @@ const Nav = styled.nav`
     display: block;
     background: transparent;
     border: none;
+    width: 100%;
     width: -webkit-fill-available;
+    height: 100%;
     height: -webkit-fill-available;
     border: 1px solid #acacac;
     background-color: transparent;
