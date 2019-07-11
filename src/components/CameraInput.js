@@ -18,7 +18,7 @@ const Label = styled.label`
   }
 `;
 
-const CameraInput = ({ inputRef, onChange }) => {
+const CameraInput = ({ inputRef, onChange, preferCamera = true }) => {
   return (
     <Label htmlFor="camera-input">
       <button
@@ -47,7 +47,7 @@ const CameraInput = ({ inputRef, onChange }) => {
       <input
         type="file"
         accept="image/*"
-        capture="environment"
+        capture={preferCamera ? "environment" : false}
         name="camera-input"
         ref={inputRef}
         onChange={onChange}

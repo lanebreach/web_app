@@ -254,6 +254,7 @@ class Camera extends React.Component {
                 onChange={e => {
                   this.handleInput(e.target.files[0]);
                 }}
+                preferCamera={false}
               />
             </ButtonsDiv>
           </>

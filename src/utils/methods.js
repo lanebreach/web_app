@@ -96,37 +96,63 @@ export const processSuccessToken = token => {
 
 export const isBrowser = () => typeof window !== "undefined";
 
-export const getStoredUser = () =>
-  isBrowser() && window.localStorage.getItem("user")
-    ? JSON.parse(window.localStorage.getItem("user"))
-    : {};
-export const storeUser = user => {
-  if (isBrowser()) {
-    window.localStorage.setItem("user", JSON.stringify(user));
+export const getStoredUser = () => {
+  try {
+    return isBrowser() && window.localStorage.getItem("user")
+      ? JSON.parse(window.localStorage.getItem("user"))
+      : {};
+  } catch (err) {
+    console.error(err);
   }
 };
-export const getIsNew = () =>
-  isBrowser() && window.localStorage.getItem("isNew")
-    ? JSON.parse(window.localStorage.getItem("isNew"))
-    : true;
+export const storeUser = user => {
+  try {
+    if (isBrowser()) {
+      window.localStorage.setItem("user", JSON.stringify(user));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+export const getIsNew = () => {
+  try {
+    return isBrowser() && window.localStorage.getItem("isNew")
+      ? JSON.parse(window.localStorage.getItem("isNew"))
+      : true;
+  } catch (err) {
+    console.error(err);
+  }
+};
 export const storeNew = isNew => {
-  if (isBrowser()) {
-    window.localStorage.setItem("isNew", JSON.stringify(isNew));
+  try {
+    if (isBrowser()) {
+      window.localStorage.setItem("isNew", JSON.stringify(isNew));
+    }
+  } catch (err) {
+    console.error(err);
   }
 };
 
 export const getSubmissions = () => {
-  if (isBrowser() && window.localStorage.getItem("submissions")) {
-    return JSON.parse(window.localStorage.getItem("submissions"));
+  try {
+    if (isBrowser() && window.localStorage.getItem("submissions")) {
+      return JSON.parse(window.localStorage.getItem("submissions"));
+    }
+    return [];
+  } catch (err) {
+    console.error(err);
   }
-  return [];
 };
 
 export const addSubmission = submission => {
-  if (isBrowser) {
-    const submissions = getSubmissions();
-    submissions.unshift(submission);
-    window.localStorage.setItem("submissions", JSON.stringify(submissions));
+  try {
+    if (isBrowser) {
+      const submissions = getSubmissions();
+      submissions.unshift(submission);
+      window.localStorage.setItem("submissions", JSON.stringify(submissions));
+    }
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -134,16 +160,20 @@ const updateSubmission = (
   newSubmission,
   filterMethod = submission => submission === newSubmission
 ) => {
-  if (isBrowser) {
-    const submissions = getSubmissions();
-    const target = submissions.find(submission => filterMethod(submission));
-    if (!target) {
-      console.warn("Couldn't find a submission matching those parameters");
-      return;
+  try {
+    if (isBrowser) {
+      const submissions = getSubmissions();
+      const target = submissions.find(submission => filterMethod(submission));
+      if (!target) {
+        console.warn("Couldn't find a submission matching those parameters");
+        return;
+      }
+      const index = submissions.indexOf(target);
+      submissions.splice(index, 1, newSubmission);
+      window.localStorage.setItem("submissions", JSON.stringify(submissions));
     }
-    const index = submissions.indexOf(target);
-    submissions.splice(index, 1, newSubmission);
-    window.localStorage.setItem("submissions", JSON.stringify(submissions));
+  } catch (err) {
+    console.error(err);
   }
 };
 
