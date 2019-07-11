@@ -1,32 +1,36 @@
 const axios = require("axios");
 
-let pollingInterval;
-function handleErr(err) {
-  clearInterval(pollingInterval);
-  callback(err, {
-    statusCode: 500,
-    body: `Something went wrong parsing your request: ${err}`
-  });
-}
-
-function sendBody(body) {
-  callback(null, {
-    statusCode: 200,
-    body
-  });
-}
-
 exports.handler = async function(event, context, callback) {
+  let pollingInterval;
+  function handleErr(err) {
+    clearInterval(pollingInterval);
+    callback(err, {
+      statusCode: 500,
+      body: `Something went wrong parsing your request: ${err}`
+    });
+  }
+  function sendBody(body) {
+    callback(null, {
+      statusCode: 200,
+      body: JSON.stringify(body)
+    });
+  }
   const url = process.env.GATSBY_311_URL;
   console.log(event.body);
+  let data;
   try {
-    const data = JSON.parse(event?.body);
+    if (event?.body?.token) {
+      data = event.body;
+    } else {
+      data = JSON.parse(event?.body);
+    }
   } catch (err) {
     console.error(err);
     handleErr(err);
   }
 
-  const { token } = data;
+  console.log("Data: ", data);
+  const { token } = data[0];
 
   pollingInterval = setInterval(() => {
     console.log("Checking if token has converted");
@@ -43,7 +47,8 @@ exports.handler = async function(event, context, callback) {
               }`
             )
             .then(({ data }) => {
-              sendBody(JSON.stringify(data[0]));
+              console.log(data);
+              sendBody(data[0]);
             })
             .catch(err => {
               console.error(err);
