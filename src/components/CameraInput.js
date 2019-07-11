@@ -33,7 +33,7 @@ const CameraInput = ({ inputRef, onChange }) => {
           focusable="false"
           data-prefix="fal"
           data-icon="image"
-          class="svg-inline--fa fa-image fa-w-16"
+          className="svg-inline--fa fa-image fa-w-16"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"

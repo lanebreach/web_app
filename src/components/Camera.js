@@ -112,8 +112,23 @@ class Camera extends React.Component {
     this.setupVideo(false);
   }
 
-  componentWillUnmount() {
-    this.cameraPhoto?.stopCamera();
+  async componentWillUnmount() {
+    const unmountPromise = new Promise((resolve, reject) => {
+      function stopStreamedVideo(videoElem) {
+        if (!videoElem) resolve();
+        let stream = videoElem.srcObject;
+        if (!stream) resolve();
+        let tracks = stream.getTracks();
+        tracks.forEach(function(track) {
+          track.stop();
+        });
+
+        videoElem.srcObject = null;
+        resolve();
+      }
+      stopStreamedVideo(this.videoRef?.current);
+    });
+    await unmountPromise;
   }
 
   setupVideo(initialize) {
@@ -140,7 +155,6 @@ class Camera extends React.Component {
       sizeFactor: 1
     };
     this.props.onTakePhoto(this.cameraPhoto.getDataUri(config));
-    this.stopCamera();
   }
 
   handleInput(file) {
@@ -229,7 +243,12 @@ class Camera extends React.Component {
             </StyledFigure>
             <ButtonsDiv>
               <div className="placeholder" />
-              <CircleButton isClicked={!image} />
+              <CircleButton
+                isClicked={!image}
+                onClick={() => {
+                  this.takePhoto();
+                }}
+              />
               <CameraInput
                 inputRef={this.inputRef}
                 onChange={e => {

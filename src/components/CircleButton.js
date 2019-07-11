@@ -56,15 +56,14 @@ const StyledButton = styled.button`
   }
 `;
 
-export const CircleButton = ({ className }) => {
+export const CircleButton = ({ className, onClick }) => {
   const [isClicked, setClicked] = useState(false);
   const innerCircleClasses = isClicked ? "is-clicked" : "";
 
   return (
     <div
       style={{ position: "relative", height: "100px", width: "100px" }}
-      onMouseDown={() => setClicked(true)}
-      onMouseUp={() => setClicked(false)}
+      onClick={onClick}
     >
       <StyledButton id="container-circles" className={className}>
         <div id="outer-circle">
