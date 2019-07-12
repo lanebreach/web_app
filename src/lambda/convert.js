@@ -16,21 +16,10 @@ exports.handler = async function(event, context, callback) {
     });
   }
   const url = process.env.GATSBY_311_URL;
-  console.log(event.body);
-  let data;
-  try {
-    if (event?.body?.token) {
-      data = event.body;
-    } else {
-      data = JSON.parse(event?.body);
-    }
-  } catch (err) {
-    console.error(err);
-    handleErr(err);
-  }
+  const data = JSON.parse(event.body);
 
   console.log("Data: ", data);
-  const { token } = data[0];
+  const { token } = data;
 
   pollingInterval = setInterval(() => {
     console.log("Checking if token has converted");

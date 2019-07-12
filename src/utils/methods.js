@@ -36,12 +36,10 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
     .then(({ data }) => {
       addSubmission(data);
       const token = data.token;
-      axios
-        .post("/.netlify/functions/convert", JSON.stringify(data))
-        .then(({ data }) => {
-          console.log(data);
-          updateSubmission(data, submission => submission.token === token);
-        });
+      axios.post("/.netlify/functions/convert", data).then(({ data }) => {
+        console.log(data);
+        updateSubmission(data, submission => submission.token === token);
+      });
     })
     .catch(error => {
       console.error(error);

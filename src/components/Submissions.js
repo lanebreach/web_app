@@ -9,7 +9,7 @@ class Submissions extends React.Component {
   componentDidMount() {
     const storedSubmissions = getSubmissions();
     const pending = storedSubmissions.filter(
-      submission => submission.type === "successful-submission"
+      submission => submission?.type === "successful-submission"
     );
 
     this.setState({ submissions: getSubmissions() });
@@ -20,12 +20,16 @@ class Submissions extends React.Component {
       <main>
         <h1>Your Submissions</h1>
         {submissions.map(submission => {
-          return (
+
+          if(submission){
+            return (
             <Submission
               submission={submission}
               key={submission.service_request_id || submission.token}
             />
-          );
+          )
+          }
+          return false;
         })}
       </main>
     );
