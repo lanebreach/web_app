@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
-import Layout from "./Layout";
+import Layout, { AppContext } from "../layouts";
+import { navigate } from "gatsby";
 import { Main } from "./UserForm";
 import { submitRequest } from "../utils/methods";
 import { Link } from "@reach/router";
@@ -44,22 +45,25 @@ const StyledForm = styled.form`
   margin-bottom: 24px;
 `;
 
-const ComplaintForm = ({
-  image,
-  setImage,
-  user,
-  setPage,
-  reset,
-  success,
-  triggerSuccess
-}) => {
+const ComplaintForm = () => {
   const [init, setInit] = useState(false);
   const [other, setOther] = useState("Other");
   const [position, setPosition] = useState();
-  const [description, setDescription] = useState("");
   const lat = position?.coords?.latitude;
   const long = position?.coords?.longitude;
   const categoryRef = useRef();
+
+  const {
+    description,
+    category,
+    setCategory,
+    setDescription,
+    image,
+    setImage,
+    user,
+    reset,
+    triggerSuccess
+  } = useContext(AppContext);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -104,6 +108,7 @@ const ComplaintForm = ({
               if (e.target.value === other) {
                 setOther(prompt("Other Category"));
               }
+              setCategory(e.target.value);
             }}
             native={true}
             ref={categoryRef}
@@ -111,6 +116,7 @@ const ComplaintForm = ({
               name: "category",
               id: "category"
             }}
+            value={category}
           >
             <Categories />
             <option id="other" label={other ? `Other: ${other}` : `Other`}>
@@ -153,7 +159,7 @@ const ComplaintForm = ({
               type="reset"
               onClick={() => {
                 setImage("");
-                setPage("home");
+                navigate("/");
               }}
             >
               Reset
@@ -165,7 +171,7 @@ const ComplaintForm = ({
             <a
               onClick={e => {
                 e.preventDefault();
-                setPage("home");
+                navigate("/");
               }}
               href=""
             >

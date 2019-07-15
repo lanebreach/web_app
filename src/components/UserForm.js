@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import Layout from "./Layout";
+import Layout, { AppContext } from "../layouts";
 import { storeUser } from "../utils/methods";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -27,12 +27,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const UserForm = ({ user = {}, setUser, setPage }) => {
+const UserForm = () => {
+  const [saved, setSaved] = useState(false);
+  const { user = {}, setUser } = useContext(AppContext);
   const { emailAddress = "", fullName = "", phoneNumber = "" } = user;
   const [email, updateEmail] = useState(emailAddress);
   const [name, updateName] = useState(fullName);
   const [phone, updatePhone] = useState(phoneNumber);
-  const [saved, setSaved] = useState(false);
   return (
     <Main>
       <p>

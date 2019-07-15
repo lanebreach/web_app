@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { navigate } from "gatsby";
 import { getStoredUser, getIsNew, storeNew } from "../utils/methods";
-import Layout from "./Layout";
+import Layout, { AppContext } from "../layouts";
 import Camera from "./Camera";
 import styled from "styled-components";
 import Modal from "@material-ui/core/Modal";
@@ -35,8 +36,10 @@ const ModalDiv = styled.div`
   }
 `;
 
-const Home = ({ image, setImage, setPage }) => {
+const Home = () => {
   const [isNew, setNew] = useState(getIsNew());
+
+  const { image, setImage } = useContext(AppContext);
 
   useEffect(() => {
     if (isNew === false) {
@@ -52,7 +55,7 @@ const Home = ({ image, setImage, setPage }) => {
     storeNew(false);
     setNew(false);
     if (e.target.closest("button").id === "add-contact") {
-      setPage("user");
+      navigate("user");
     }
   };
   return (
@@ -97,8 +100,9 @@ const Home = ({ image, setImage, setPage }) => {
       {isNew ? null : (
         <Camera
           onTakePhoto={dataUri => {
-            setImage(dataUri);
-            setPage("form");
+            setImage(dataUri, () => {
+              navigate("form");
+            });
           }}
           image={image}
           setImage={setImage}

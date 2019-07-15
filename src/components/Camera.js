@@ -4,7 +4,7 @@ import CameraPhoto, {
   FACING_MODES,
   IMAGE_TYPES
 } from "jslib-html5-camera-photo";
-import Layout from "./Layout";
+import Layout from "../layouts";
 import CircleButton from "./CircleButton";
 import Button from "@material-ui/core/Button";
 import { checkHappyPath } from "../utils/methods";
