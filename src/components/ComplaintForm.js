@@ -46,6 +46,7 @@ const StyledForm = styled.form`
 `;
 
 const ComplaintForm = () => {
+  const [open, setOpen] = React.useState(false);
   const [init, setInit] = useState(false);
   const [other, setOther] = useState("Other");
   const [position, setPosition] = useState();
@@ -110,6 +111,8 @@ const ComplaintForm = () => {
               }
               setCategory(e.target.value);
             }}
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
             native={true}
             ref={categoryRef}
             inputProps={{

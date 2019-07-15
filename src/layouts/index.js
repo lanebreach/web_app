@@ -116,7 +116,7 @@ class Layout extends React.Component {
       phoneNumber: ""
     },
     description: "",
-    category: "",
+    category: "Private vehicle",
     submissions: []
   };
 
@@ -151,7 +151,7 @@ class Layout extends React.Component {
       {
         image: "",
         description: "",
-        category: ""
+        category: "Private vehicle"
       },
       () => {
         navigate("/");
