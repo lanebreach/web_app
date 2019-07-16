@@ -1,39 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { getSubmissions } from "../utils/methods";
 import Submission from "./Submission";
+import { AppContext } from "../layouts";
 
-class Submissions extends React.Component {
-  state = {
-    submissions: []
-  };
-  componentDidMount() {
-    const storedSubmissions = getSubmissions();
-    const pending = storedSubmissions.filter(
-      submission => submission?.type === "successful-submission"
-    );
-
-    this.setState({ submissions: getSubmissions() });
-  }
-  render() {
-    const { submissions } = this.state;
-    return (
-      <main>
-        <h1>Your Submissions</h1>
-        {submissions.map(submission => {
-
-          if(submission){
-            return (
+const Submissions = () => {
+  const { submissions = [] } = useContext(AppContext);
+  return (
+    <main>
+      <h1>Your Submissions</h1>
+      {submissions.map(submission => {
+        if (submission) {
+          return (
             <Submission
               submission={submission}
               key={submission.service_request_id || submission.token}
             />
-          )
-          }
-          return false;
-        })}
-      </main>
-    );
-  }
-}
+          );
+        }
+        return false;
+      })}
+    </main>
+  );
+};
 
 export default Submissions;

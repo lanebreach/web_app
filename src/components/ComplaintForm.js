@@ -63,7 +63,8 @@ const ComplaintForm = () => {
     setImage,
     user,
     reset,
-    triggerSuccess
+    triggerSuccess,
+    setSubmissions
   } = useContext(AppContext);
 
   const handleSubmit = e => {
@@ -82,7 +83,9 @@ const ComplaintForm = () => {
         ...user
       };
       console.log("submitting request");
-      submitRequest(report, triggerSuccess, reset);
+      submitRequest(report, triggerSuccess, reset).then(submissions => {
+        setSubmissions(submissions);
+      });
     }
   };
 

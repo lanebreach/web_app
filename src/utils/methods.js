@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "store";
 import { detect } from "detect-browser";
 
 function dataURItoBlob(dataURI) {
@@ -28,18 +29,48 @@ function dataURItoBlob(dataURI) {
   return blob;
 }
 
+const storeToken = token => {
+  addSubmission({ token });
+};
+
+export const convertToken = token => {
+  return new Promise((resolve, reject) => {
+    storeToken(token);
+    axios
+      .post("/.netlify/functions/convert", { token })
+      .then(convertedResponse => {
+        const convertedData = convertedResponse.data;
+        console.log(convertedData);
+        updateSubmission(
+          convertedData,
+          submission => submission.token === token
+        );
+        resolve(getSubmissions());
+      })
+      .catch(err => {
+        console.error(err);
+        storeToken(token);
+        reject(err);
+      });
+  });
+};
+
 export const submitRequest = async (data, triggerSuccess, reset) => {
   triggerSuccess();
   reset();
   axios
     .post("/.netlify/functions/submit", data)
-    .then(({ data }) => {
-      addSubmission(data);
-      const token = data.token;
-      axios.post("/.netlify/functions/convert", data).then(({ data }) => {
-        console.log(data);
-        updateSubmission(data, submission => submission.token === token);
-      });
+    .then(submitResponse => {
+      if (submitResponse.status === 200) {
+        const responseData = submitResponse.data;
+        addSubmission(responseData);
+        const token = responseData.token;
+
+        return convertToken(token);
+      } else {
+        console.warn("non-200 status", submitResponse);
+        addSubmission(data);
+      }
     })
     .catch(error => {
       console.error(error);
@@ -97,84 +128,52 @@ export const processSuccessToken = token => {
 export const isBrowser = () => typeof window !== "undefined";
 
 export const getStoredUser = () => {
-  try {
-    return isBrowser() && window.localStorage.getItem("user")
-      ? JSON.parse(window.localStorage.getItem("user"))
-      : {};
-  } catch (err) {
-    console.error(err);
-  }
+  store.get("user");
 };
 export const storeUser = user => {
-  try {
-    if (isBrowser()) {
-      window.localStorage.setItem("user", JSON.stringify(user));
-    }
-  } catch (err) {
-    console.error(err);
-  }
+  store.set("user", user);
 };
 export const getIsNew = () => {
-  try {
-    return isBrowser() && window.localStorage.getItem("isNew")
-      ? JSON.parse(window.localStorage.getItem("isNew"))
-      : true;
-  } catch (err) {
-    console.error(err);
-  }
+  return store.get("isNew");
 };
 export const storeNew = isNew => {
-  try {
-    if (isBrowser()) {
-      window.localStorage.setItem("isNew", JSON.stringify(isNew));
-    }
-  } catch (err) {
-    console.error(err);
-  }
+  store.set("isNew", isNew);
 };
 
 export const getSubmissions = () => {
-  try {
-    if (isBrowser() && window.localStorage.getItem("submissions")) {
-      return JSON.parse(window.localStorage.getItem("submissions"));
-    }
-    return [];
-  } catch (err) {
-    console.error(err);
-  }
+  return (
+    store.get("submissions")?.filter(submission => {
+      return typeof submission === "object";
+    }) || []
+  );
 };
 
 export const addSubmission = submission => {
-  try {
-    if (isBrowser) {
-      const submissions = getSubmissions();
-      submissions.unshift(submission);
-      window.localStorage.setItem("submissions", JSON.stringify(submissions));
-    }
-  } catch (err) {
-    console.error(err);
-  }
+  const submissions = getSubmissions();
+  submissions.unshift(submission);
+  store.set("submissions", submissions);
 };
 
 const updateSubmission = (
   newSubmission,
   filterMethod = submission => submission === newSubmission
 ) => {
-  try {
-    if (isBrowser) {
-      const submissions = getSubmissions();
-      const target = submissions.find(submission => filterMethod(submission));
-      if (!target) {
-        console.warn("Couldn't find a submission matching those parameters");
-        return;
-      }
-      const index = submissions.indexOf(target);
-      submissions.splice(index, 1, newSubmission);
-      window.localStorage.setItem("submissions", JSON.stringify(submissions));
-    }
-  } catch (err) {
-    console.error(err);
+  const submissions = getSubmissions();
+  const targets = submissions.filter(submission => filterMethod(submission));
+  if (!targets.length) {
+    console.warn("Couldn't find a submission matching those parameters");
+    return;
   }
+  let firstIndex;
+  targets.forEach(target => {
+    const index = submissions.indexOf(target);
+    if (firstIndex === undefined) {
+      firstIndex = index;
+    }
+    submissions.splice(index, 1);
+  });
+  submissions.splice(firstIndex, 1, newSubmission);
+  store.set("submissions", submissions);
 };
 
 export const checkHappyPath = () => {

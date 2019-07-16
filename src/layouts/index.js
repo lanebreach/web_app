@@ -4,6 +4,8 @@ import styled, { createGlobalStyle } from "styled-components";
 import store from "store";
 import { Helmet } from "react-helmet";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import gif from "../images/Smile.gif";
+import { getSubmissions } from "../utils/methods";
 
 const SuccessScreen = styled.div`
   position: fixed;

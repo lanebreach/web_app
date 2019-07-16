@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { convertToken, getSubmissions } from "../utils/methods";
+import { AppContext } from "../layouts";
 
 const StyledDiv = styled.div`
   display: flex;
   flex-direction: row;
+  border-bottom: 1px solid black;
+  margin: 10px;
+
   img {
     height: 5rem;
     width: 5rem;
+    margin-right: 12px;
+  }
+  .retry-div {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 5rem;
+    button {
+      height: 35px;
+      width: 35px;
+      background: none;
+      border: 1px solid black;
+      border-radius: 5px;
+      margin-right: 5px;
+      svg {
+        display: block;
+        height: 20px;
+        width: 20px;
+      }
+    }
   }
 `;
 
@@ -40,24 +66,46 @@ const Submission = ({ submission }) => {
     service_name,
     service_request_id,
     status,
-    updated_datetime,
-    isConverted = true
+    updated_datetime
   } = submission;
+  const [pending, setPending] = useState(false);
   const domain = process.env.GATSBY_311_URL;
+  console.log(submission);
+  const isConverted = !submission.token || service_request_id;
+  const { submissions, setSubmissions } = useContext(AppContext);
+  console.log(submissions);
   return (
     <StyledDiv>
       {!isConverted ? (
-        <button onClick={() => resubmit(submission)} type="button" />
-      ) : null}
-      <a href={`${domain}/reports/${service_request_id}`}>
-        <img src={media_url} alt="thumbnail" />
-      </a>
-      <div>
-        <a href={`${domain}/reports/${service_request_id}`}>
-          <strong>{address}</strong>
-        </a>
-        <p>{description}</p>
-      </div>
+        <div className="retry-div">
+          <button
+            onClick={() => {
+              setPending(true);
+              convertToken(submission.token).then(submissions => {
+                setSubmissions(submissions);
+                setPending(false);
+              });
+            }}
+            disabled={pending}
+            type="button"
+          >
+            <Redo />
+          </button>
+          <span>Submission failed. Click to retry</span>
+        </div>
+      ) : (
+        <>
+          <a href={`${domain}/reports/${service_request_id}`}>
+            <img src={media_url} alt="thumbnail" />
+          </a>
+          <div>
+            <a href={`${domain}/reports/${service_request_id}`}>
+              <strong>{address}</strong>
+            </a>
+            <p>{description}</p>
+          </div>
+        </>
+      )}
     </StyledDiv>
   );
 };
