@@ -66,7 +66,7 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
         addSubmission(responseData);
         const token = responseData.token;
 
-        return convertToken(token);
+        convertToken(token);
       } else {
         console.warn("non-200 status", submitResponse);
         addSubmission(data);
@@ -172,8 +172,9 @@ const updateSubmission = (
     }
     submissions.splice(index, 1);
   });
-  submissions.splice(firstIndex, 1, newSubmission);
+  submissions.splice(firstIndex, 0, newSubmission);
   store.set("submissions", submissions);
+  return getSubmissions();
 };
 
 export const checkHappyPath = () => {

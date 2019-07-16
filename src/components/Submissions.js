@@ -1,17 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { getSubmissions } from "../utils/methods";
 import Submission from "./Submission";
 import { AppContext } from "../layouts";
 
 const Submissions = () => {
-  const { submissions = [] } = useContext(AppContext);
+  const [submissions, setSubmissions] = useState([]);
+  const [init, setInit] = useState(false);
+  useEffect(() => {
+    if (!init) {
+      setSubmissions(getSubmissions());
+      setInit(true);
+    }
+  });
   return (
     <main>
       <h1>Your Submissions</h1>
-      {submissions.map(submission => {
+      {submissions?.map(submission => {
         if (submission) {
           return (
             <Submission
+              submissions={submissions}
               submission={submission}
               key={submission.service_request_id || submission.token}
             />

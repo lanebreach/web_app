@@ -54,7 +54,7 @@ const Redo = () => (
   </svg>
 );
 
-const Submission = ({ submission }) => {
+const Submission = ({ submission, submissions }) => {
   const {
     address,
     description,
@@ -70,10 +70,8 @@ const Submission = ({ submission }) => {
   } = submission;
   const [pending, setPending] = useState(false);
   const domain = process.env.GATSBY_311_URL;
-  console.log(submission);
   const isConverted = !submission.token || service_request_id;
-  const { submissions, setSubmissions } = useContext(AppContext);
-  console.log(submissions);
+  const { setSubmissions } = useContext(AppContext);
   return (
     <StyledDiv>
       {!isConverted ? (

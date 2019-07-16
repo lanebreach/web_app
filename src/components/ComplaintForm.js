@@ -83,9 +83,7 @@ const ComplaintForm = () => {
         ...user
       };
       console.log("submitting request");
-      submitRequest(report, triggerSuccess, reset).then(submissions => {
-        setSubmissions(submissions);
-      });
+      submitRequest(report, triggerSuccess, reset);
     }
   };
 
