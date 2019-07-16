@@ -21,33 +21,35 @@ exports.handler = async function(event, context, callback) {
   console.log("Data: ", data);
   const { token } = data;
 
-  pollingInterval = setInterval(() => {
-    console.log("Checking if token has converted");
-    axios
-      .get(`${url}/open311/v2/tokens/${token}.json`)
-      .then(({ data }) => {
-        console.log(data);
-        if (data[0].service_request_id) {
-          clearInterval(pollingInterval);
-          axios
-            .get(
-              `${url}/open311/v2/requests.json?service_request_id=${
-                data[0].service_request_id
-              }`
-            )
-            .then(({ data }) => {
-              console.log(data);
-              sendBody(data[0]);
-            })
-            .catch(err => {
-              console.error(err);
-              handleErr(err);
-            });
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        handleErr(err);
-      });
-  }, 1000);
+  const response = await new Promise((resolve, reject) => {
+    pollingInterval = setInterval(() => {
+      console.log("Checking if token has converted");
+      axios
+        .get(`${url}/open311/v2/tokens/${token}.json`)
+        .then(({ data }) => {
+          console.log(data);
+          if (data[0].service_request_id) {
+            clearInterval(pollingInterval);
+            axios
+              .get(
+                `${url}/open311/v2/requests.json?service_request_id=${
+                  data[0].service_request_id
+                }`
+              )
+              .then(({ data }) => {
+                console.log(data);
+                resolve(data[0]);
+              })
+              .catch(err => {
+                reject(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          handleErr(err);
+        });
+    }, 1000);
+  });
+  sendBody(response);
 };
