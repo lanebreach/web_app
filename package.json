@@ -7,7 +7,7 @@
     "develop": "gatsby develop",
     "start": "concurrently \"yarn serve:lambda\" \"yarn develop\"",
     "serve:lambda": "netlify-lambda serve src/lambda --config ./webpack.functions.js --timeout 60000",
-    "build": "netlify-lambda build src/lambda --config ./webpack.functions.js && gatsby build"
+    "build": "gatsby build"
   },
   "keywords": [
     "311",
