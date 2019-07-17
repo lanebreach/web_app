@@ -20,6 +20,7 @@ module.exports = {
         path: `${__dirname}/src/images/`
       }
     },
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-layout`,
     {
       resolve: `gatsby-plugin-manifest`,
@@ -30,7 +31,7 @@ module.exports = {
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
         display: `standalone`,
-        icon: `src/images/blfa-icon.jpg`
+        icon: `src/images/lanebreach-logo.svg`
       }
     },
     `gatsby-plugin-offline`

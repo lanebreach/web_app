@@ -42,6 +42,7 @@
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-offline": "^2.1.0",
     "gatsby-plugin-static-folders": "^1.0.1",
+    "gatsby-plugin-styled-components": "^3.1.2",
     "gatsby-source-filesystem": "^2.1.1",
     "jslib-html5-camera-photo": "^3.0.2-beta.0",
     "netlify-lambda": "^1.4.13",
