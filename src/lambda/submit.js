@@ -4,25 +4,24 @@ import { URLSearchParams } from "url";
 global.URLSearchParams = URLSearchParams;
 
 exports.handler = async function(event, context, callback) {
-  const accessKeyId = process.env.ACCESS_KEY;
-  const secretAccessKey = process.env.SECRET_KEY;
-  const url = process.env.GATSBY_311_URL;
-  const apiKey = process.env.API_KEY;
-  const data = JSON.parse(event.body);
-  const {
-    category,
-    description,
-    fullName = "",
-    emailAddress,
-    phoneNumber,
-    lat,
-    long,
-    image
-  } = data;
+  const handleRequest = async () => {
+    const accessKeyId = process.env.ACCESS_KEY;
+    const secretAccessKey = process.env.SECRET_KEY;
+    const url = process.env.GATSBY_311_URL;
+    const apiKey = process.env.API_KEY;
+    const data = JSON.parse(event.body);
+    const {
+      category,
+      description,
+      fullName = "",
+      emailAddress,
+      phoneNumber,
+      lat,
+      long,
+      image
+    } = data;
 
-  return callback(null, {
-    statusCode: 200,
-    body: await new Promise(async (resolveResponse, rejectResponse) => {
+    const response = new Promise(async (resolveResponse, rejectResponse) => {
       let media_url;
 
       var buf = new Buffer.from(
@@ -86,6 +85,13 @@ exports.handler = async function(event, context, callback) {
           }
           resolveResponse(formattedData);
         });
-    })
+    });
+    return response;
+  };
+  const body = await handleRequest();
+  console.log("body", body);
+  return Promise.resolve({
+    statusCode: "200",
+    body
   });
 };

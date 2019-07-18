@@ -9,12 +9,6 @@ exports.handler = async function(event, context, callback) {
       body: `Something went wrong parsing your request: ${err}`
     });
   }
-  function sendBody(body) {
-    callback(null, {
-      statusCode: 200,
-      body: JSON.stringify(body)
-    });
-  }
   const url = process.env.GATSBY_311_URL;
   const data = JSON.parse(event.body);
 
@@ -51,5 +45,8 @@ exports.handler = async function(event, context, callback) {
         });
     }, 1000);
   });
-  sendBody(response);
+  return Promise.resolve({
+    statusCode: "200",
+    body: JSON.stringify(response)
+  });
 };
