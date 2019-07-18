@@ -91,7 +91,7 @@ exports.handler = async function(event, context, callback) {
   const body = await handleRequest();
   console.log("body", body);
   return Promise.resolve({
-    statusCode: "200",
+    statusCode: 200,
     body: JSON.stringify(body)
   });
 };

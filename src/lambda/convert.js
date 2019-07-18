@@ -46,7 +46,7 @@ exports.handler = async function(event, context, callback) {
     }, 1000);
   });
   return Promise.resolve({
-    statusCode: "200",
+    statusCode: 200,
     body: JSON.stringify(response)
   });
 };
