@@ -8,11 +8,14 @@ const storeToken = token => {
 
 export const convertToken = token => {
   return new Promise((resolve, reject) => {
-    storeToken(token);
     axios
       .post("/.netlify/functions/convert", { token })
       .then(convertedResponse => {
-        const convertedData = convertedResponse.data;
+        let convertedData;
+        if (typeof convertedResponse?.data === "string") {
+          convertedData = JSON.parse(convertedResponse.data);
+        } else convertedData = convertedResponse.data;
+
         console.log(convertedData);
         updateSubmission(
           convertedData,
@@ -35,7 +38,12 @@ export const submitRequest = async (data, triggerSuccess, reset) => {
     .post("/.netlify/functions/submit", data)
     .then(submitResponse => {
       if (submitResponse.status === 200) {
-        const responseData = submitResponse.data;
+        let responseData;
+        if (submitResponse?.data?.token) {
+          responseData = submitResponse.data;
+        } else {
+          responseData = JSON.parse(submitResponse.data);
+        }
         addSubmission(responseData);
         const token = responseData.token;
 
