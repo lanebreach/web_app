@@ -92,6 +92,6 @@ exports.handler = async function(event, context, callback) {
   console.log("body", body);
   return Promise.resolve({
     statusCode: "200",
-    body
+    body: JSON.stringify(body)
   });
 };
