@@ -230,7 +230,16 @@ class Layout extends React.Component {
                 <h2>Success!</h2>
               </picture>
             </SuccessScreen>
-          ) : null}
+          ) : (
+            <picture style={{ display: "none" }}>
+              <source
+                type="video/mp4"
+                srcSet="https://lane-breach.s3-us-west-1.amazonaws.com/images/Bike_Smile.mp4"
+              />
+              <img src={gif} />
+              <h2>Success!</h2>
+            </picture>
+          )}
           {children}
         </AppContext.Provider>
         <Nav>
