@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import gif from "../images/Smile.gif";
 import { getSubmissions } from "../utils/methods";
+import PencilBanner from "../components/PencilBanner";
 
 const SuccessScreen = styled.div`
   position: fixed;
@@ -217,6 +218,7 @@ class Layout extends React.Component {
         <CssBaseline />
         <GlobalStyle />
         <AppContext.Provider value={sharedContext}>
+          <PencilBanner />
           {this.state.success ? (
             <SuccessScreen>
               <picture>
