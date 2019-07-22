@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import gif from "../images/Smile.gif";
 import { getSubmissions } from "../utils/methods";
+import PencilBanner from "../components/PencilBanner";
 
 const SuccessScreen = styled.div`
   position: fixed;
@@ -217,6 +218,7 @@ class Layout extends React.Component {
         <CssBaseline />
         <GlobalStyle />
         <AppContext.Provider value={sharedContext}>
+          <PencilBanner />
           {this.state.success ? (
             <SuccessScreen>
               <picture>
@@ -228,7 +230,16 @@ class Layout extends React.Component {
                 <h2>Success!</h2>
               </picture>
             </SuccessScreen>
-          ) : null}
+          ) : (
+            <picture style={{ display: "none" }}>
+              <source
+                type="video/mp4"
+                srcSet="https://lane-breach.s3-us-west-1.amazonaws.com/images/Bike_Smile.mp4"
+              />
+              <img src={gif} />
+              <h2>Success!</h2>
+            </picture>
+          )}
           {children}
         </AppContext.Provider>
         <Nav>

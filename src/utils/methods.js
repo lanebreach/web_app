@@ -71,13 +71,17 @@ export const handleSuccess = token => {
 export const isBrowser = () => typeof window !== "undefined";
 
 export const getStoredUser = () => {
-  store.get("user");
+  return store.get("user");
 };
 export const storeUser = user => {
   store.set("user", user);
 };
 export const getIsNew = () => {
-  return store.get("isNew");
+  let storedNew = store.get("isNew");
+  if (typeof storedNew === "undefined") {
+    storedNew = true;
+  }
+  return storedNew;
 };
 export const storeNew = isNew => {
   store.set("isNew", isNew);

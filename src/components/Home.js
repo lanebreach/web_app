@@ -6,23 +6,14 @@ import WelcomeModal from "./WelcomeModal";
 import Camera from "./Camera";
 
 const Home = () => {
-  const [isNew, setNew] = useState(getIsNew() || true);
+  const [isNew, setNew] = useState(getIsNew());
 
   const { image, setImage } = useContext(AppContext);
 
-  useEffect(() => {
-    if (isNew === false) {
-      return;
-    }
-    const returning = getIsNew();
-    if (returning) {
-      setNew(true);
-    }
-  });
   const handleNew = e => {
     storeNew(false);
     setNew(false);
-    if (e.targetElement.id === "add-contact") {
+    if (e.currentTarget.id === "add-contact") {
       navigate("user");
     }
   };
