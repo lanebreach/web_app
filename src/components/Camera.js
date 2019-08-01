@@ -24,7 +24,6 @@ const ButtonsDiv = styled.div`
   .placeholder {
     width: 75px;
     height: 75px;
-    tab-index: -1;
     pointer-events: none;
     opacity: 0;
   }
@@ -80,10 +79,6 @@ const InputDiv = styled.div`
   left: -10vw;
   height: 100vh;
   width: 100vw;
-  button[title="Media"] {
-    height: 30vh;
-    width: 30vh;
-  }
   h4 {
     padding: 10vw;
     text-align: center;
@@ -210,7 +205,13 @@ class Camera extends React.Component {
               this.handleInput(e.target.files[0]);
             }}
           />
-          <h4>Click to take open your camera or select&nbsp;a&nbsp;photo</h4>
+          <h4
+            onClick={() => {
+              this.inputRef?.current?.click();
+            }}
+          >
+            Click to open your camera or select&nbsp;a&nbsp;photo
+          </h4>
         </InputDiv>
       );
     return (
@@ -254,7 +255,6 @@ class Camera extends React.Component {
                 onChange={e => {
                   this.handleInput(e.target.files[0]);
                 }}
-                preferCamera={false}
               />
             </ButtonsDiv>
           </>
