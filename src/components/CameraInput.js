@@ -9,7 +9,7 @@ const Label = styled.label`
     display: flex;
     flex-direction: row;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     margin: auto;
     height: 200px;
     height: -webkit-fill-available;
@@ -22,8 +22,8 @@ const Label = styled.label`
     }
     height: 30vw;
     width: 30vw;
-    max-height: 300px;
-    max-width: 300px;
+    max-height: 250px;
+    max-width: 250px;
     background: white;
     padding: 2rem;
     border: 4px solid black;

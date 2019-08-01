@@ -80,7 +80,7 @@ const InputDiv = styled.div`
   height: 100vh;
   width: 100vw;
   h4 {
-    padding: 10vw;
+    padding: 16px 10vw;
     text-align: center;
   }
 `;
