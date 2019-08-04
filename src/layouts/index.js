@@ -164,7 +164,7 @@ class Layout extends React.Component {
   triggerSuccess = () => {
     const { setSuccess } = this;
     setSuccess(true);
-    setTimeout(() => setSuccess(false), 2500);
+    setTimeout(() => setSuccess(false), 3500);
   };
 
   componentWillMount() {
