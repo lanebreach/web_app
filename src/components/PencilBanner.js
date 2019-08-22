@@ -19,7 +19,8 @@ const PencilDiv = styled.div`
 
 const PencilBanner = () => {
   // TODO: Make this message environment dependent
-  const message = "Development site. Will not submit to 311";
+  const message = process.env.GATSBY_PENCIL_MESSAGE;
+
   console.log(message);
 
   if (!message) return null;

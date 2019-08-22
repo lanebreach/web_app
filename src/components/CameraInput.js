@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
+import { checkHappyPath } from "../utils/methods";
 
 const Label = styled.label`
   width: 80vw;
@@ -38,33 +39,42 @@ const Label = styled.label`
 
 const CameraInput = ({ inputRef, onChange }) => {
   const [preferCamera, setPreferCamera] = useState(true);
+  const happyPath = checkHappyPath();
+  const happyStyles = {
+    width: "75px",
+    height: "75px",
+    position: "absolute",
+    right: "calc(50% - 200px)"
+  };
   return (
-    <Label htmlFor="camera-input">
+    <Label htmlFor="camera-input" style={!!happyPath ? happyStyles : null}>
       <div class="row">
-        <button
-          onClick={() => {
-            setPreferCamera(true);
-            inputRef?.current?.click();
-          }}
-          type="button"
-          title="Camera"
-        >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="far"
-            data-icon="camera"
-            className="svg-inline--fa fa-camera fa-w-16 fa-2x "
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
+        {!happyPath ? (
+          <button
+            onClick={() => {
+              setPreferCamera(true);
+              inputRef?.current?.click();
+            }}
+            type="button"
+            title="Camera"
           >
-            <path
-              fill="currentColor"
-              d="M342.7 144H464v288H48V144h121.3l24-64h125.5l23.9 64zM324.3 32h-131c-20 0-37.9 12.4-44.9 31.1L136 96H48c-26.5 0-48 21.5-48 48v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V144c0-26.5-21.5-48-48-48h-88l-14.3-38c-5.8-15.7-20.7-26-37.4-26zM256 408c-66.2 0-120-53.8-120-120s53.8-120 120-120 120 53.8 120 120-53.8 120-120 120zm0-192c-39.7 0-72 32.3-72 72s32.3 72 72 72 72-32.3 72-72-32.3-72-72-72z"
-            />
-          </svg>
-        </button>
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="far"
+              data-icon="camera"
+              className="svg-inline--fa fa-camera fa-w-16 fa-2x "
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M342.7 144H464v288H48V144h121.3l24-64h125.5l23.9 64zM324.3 32h-131c-20 0-37.9 12.4-44.9 31.1L136 96H48c-26.5 0-48 21.5-48 48v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V144c0-26.5-21.5-48-48-48h-88l-14.3-38c-5.8-15.7-20.7-26-37.4-26zM256 408c-66.2 0-120-53.8-120-120s53.8-120 120-120 120 53.8 120 120-53.8 120-120 120zm0-192c-39.7 0-72 32.3-72 72s32.3 72 72 72 72-32.3 72-72-32.3-72-72-72z"
+              />
+            </svg>
+          </button>
+        ) : null}
         <button
           onClick={() => {
             setPreferCamera(false);
@@ -72,6 +82,7 @@ const CameraInput = ({ inputRef, onChange }) => {
           }}
           type="button"
           title="Media"
+          style={happyPath ? { height: "auto" } : null}
         >
           <svg
             aria-hidden="true"

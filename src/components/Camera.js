@@ -82,6 +82,7 @@ const InputDiv = styled.div`
   h4 {
     padding: 16px 10vw;
     text-align: center;
+    cursor: pointer;
   }
 `;
 
@@ -178,8 +179,9 @@ class Camera extends React.Component {
   inputRef = React.createRef();
   render() {
     const { image, setImage } = this.props;
+    const { supportedBrowser } = this.state;
     // TODO #4 Support file upload as fallback for camera
-    if (!this.state?.supportedBrowser)
+    if (!supportedBrowser)
       return image ? (
         <ResetDiv>
           <p>You have already taken an image:</p>
@@ -243,7 +245,10 @@ class Camera extends React.Component {
               <video ref={this.videoRef} autoPlay />
             </StyledFigure>
             <ButtonsDiv>
-              <div className="placeholder" />
+              <div
+                className="placeholder"
+                style={supportedBrowser ? { display: "none" } : null}
+              />
               <CircleButton
                 isClicked={!image}
                 onClick={() => {
