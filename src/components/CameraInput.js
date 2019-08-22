@@ -44,7 +44,8 @@ const CameraInput = ({ inputRef, onChange }) => {
     width: "75px",
     height: "75px",
     position: "absolute",
-    right: "calc(50% - 200px)"
+    right: "calc(50% - 150px)",
+    top: "60px"
   };
   return (
     <Label htmlFor="camera-input" style={!!happyPath ? happyStyles : null}>
