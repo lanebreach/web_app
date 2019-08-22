@@ -88,36 +88,36 @@ export const storeNew = isNew => {
 };
 
 export const getSubmissions = () => {
-  return store.get("submissions")?.filter(submission => !!submission) || [];
+  // return store.get("submissions")?.filter(submission => !!submission) || [];
 };
 
 export const addSubmission = submission => {
-  console.log("storing submission:", submission);
-  const submissions = getSubmissions();
-  submissions.unshift(submission);
-  store.set("submissions", submissions);
+  // console.log("storing submission:", submission);
+  // const submissions = getSubmissions();
+  // submissions.unshift(submission);
+  // store.set("submissions", submissions);
 };
 
 const updateSubmission = (
   newSubmission,
   filterMethod = submission => submission === newSubmission
 ) => {
-  const submissions = getSubmissions();
-  const targets = submissions.filter(submission => filterMethod(submission));
-  if (!targets.length) {
-    console.warn("Couldn't find a submission matching those parameters");
-    return;
-  }
-  let firstIndex;
-  targets.forEach(target => {
-    const index = submissions.indexOf(target);
-    if (firstIndex === undefined) {
-      firstIndex = index;
-    }
-    submissions.splice(index, 1);
-  });
-  submissions.splice(firstIndex, 0, newSubmission);
-  store.set("submissions", submissions);
+  // const submissions = getSubmissions();
+  // const targets = submissions.filter(submission => filterMethod(submission));
+  // if (!targets.length) {
+  //   console.warn("Couldn't find a submission matching those parameters");
+  //   return;
+  // }
+  // let firstIndex;
+  // targets.forEach(target => {
+  //   const index = submissions.indexOf(target);
+  //   if (firstIndex === undefined) {
+  //     firstIndex = index;
+  //   }
+  //   submissions.splice(index, 1);
+  // });
+  // submissions.splice(firstIndex, 0, newSubmission);
+  // store.set("submissions", submissions);
   return getSubmissions();
 };
 

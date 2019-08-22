@@ -14,7 +14,7 @@ const Submissions = () => {
   });
   return (
     <main>
-      <h1>Your Submissions</h1>
+      <h1>Your Submissions (Feature under development)</h1>
       {submissions?.map(submission => {
         if (submission) {
           return (
