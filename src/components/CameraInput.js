@@ -82,7 +82,11 @@ const CameraInput = ({ inputRef, onChange }) => {
           }}
           type="button"
           title="Media"
-          style={happyPath ? { height: "auto" } : null}
+          style={
+            happyPath
+              ? { height: "auto", padding: "10px", borderWidth: "2px" }
+              : null
+          }
         >
           <svg
             aria-hidden="true"
