@@ -100,12 +100,18 @@ const Nav = styled.nav`
   }
 `;
 
+const IOSLink = styled.div`
+  z-index: 2;
+`;
+
 const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         height: 100vh;
     }
 `;
+
+
 
 export const AppContext = React.createContext();
 
@@ -219,6 +225,11 @@ class Layout extends React.Component {
         <GlobalStyle />
         <AppContext.Provider value={sharedContext}>
           <PencilBanner />
+          <IOSLink>
+            {/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream ? (
+              <div>Check out our <a href="https://apps.apple.com/us/app/lane-breach/id1447775781">iOS App</a></div>
+            ) : (<div></div>)}
+          </IOSLink>
           {this.state.success ? (
             <SuccessScreen>
               <picture>
