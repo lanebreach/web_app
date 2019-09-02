@@ -4,6 +4,7 @@ import { getIsNew, storeNew } from "../utils/methods";
 import { AppContext } from "../layouts";
 import WelcomeModal from "./WelcomeModal";
 import Camera from "./Camera";
+import Helmet from "react-helmet";
 
 const Home = () => {
   const [isNew, setNew] = useState(getIsNew());
@@ -19,6 +20,14 @@ const Home = () => {
   };
   return (
     <>
+    <Helmet>
+      <title>Lane Breach</title>
+      <meta property="og:title" content="Lane Breach" />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content="Let's get cars out of bike lanes." />
+      <meta property="og:url" content="https://app.lanebreach.com/" />
+      <meta property="og:image" content="https://i.imgur.com/NJt0xwK.jpg" />
+    </Helmet>
       <WelcomeModal isNew={!!isNew} handleNew={handleNew} />
       {isNew ? null : (
         <Camera
