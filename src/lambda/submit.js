@@ -74,6 +74,11 @@ exports.handler = async function(event, context, callback) {
         "attribute[Nature_of_request]": "Blocking_Bicycle_Lane"
       };
 
+      console.log(
+        "url:",
+        `${domain}?${new URLSearchParams(parameters).toString()}`
+      );
+
       axios
         .post(`${domain}?${new URLSearchParams(parameters).toString()}`)
         .then(function({ data }) {
@@ -84,11 +89,18 @@ exports.handler = async function(event, context, callback) {
             rejectResponse(err);
           }
           resolveResponse(formattedData);
+        })
+        .catch(function(err) {
+          console.error(new Error(err));
         });
     });
     return response;
   };
-  const body = await handleRequest();
+  try {
+    const body = await handleRequest();
+  } catch (error) {
+    console.error(new Error(error));
+  }
   console.log("body", body);
   return Promise.resolve({
     statusCode: 200,
